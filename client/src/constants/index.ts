@@ -9,6 +9,8 @@ import { PiSneakerMoveFill } from "react-icons/pi";
 import { SiAdidas, SiBluesky, SiImessage, SiNewbalance, SiNike, SiPkgsrc, SiPuma, SiRocketdotchat, SiWhatsapp } from "react-icons/si";
 import { variantsBottom, variantsRight } from "../styles/animation";
 import {previousMonth} from '../utils/previousMonth';
+import {AiFillSkin } from 'react-icons/ai';
+
 export interface NavListsProps{
     name: string;
     link: string;
@@ -134,10 +136,7 @@ const ListsFilter: Array<BaseProps> = [
     },{
         name: "Puma",
         icon: SiPuma  , 
-    },{
-        name:"Sneaker",
-        icon: GiBilledCap , 
-    }
+    }, 
 ]
 
 const ListsIconHomePage: Array<BaseProps> = [
@@ -195,7 +194,7 @@ const ListIconCategories: Array<BaseProps> = [
 
 const IconCategoriesFilter: Array<BaseProps> = [
     {
-        icon: GiBilledCap ,
+        icon: AiFillSkin  ,
         name: "t-shirt"
     },{
         icon: PiSneakerMoveFill ,

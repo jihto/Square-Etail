@@ -5,17 +5,21 @@ import { ThunkDispatch } from 'redux-thunk';
 import { RootState } from '../../redux/store';
 import { RootProductAction } from '../../redux/reducers/productReducer';
 import { getCategories, getProducts, getProductsByImage } from '../../redux/actions/productActions';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import IconButton from '../../components/buttons/IconButton'; 
 import { CiImageOn, CiSearch } from 'react-icons/ci'; 
 import useImageModal from '../../hooks/useImageModal';
 import { IoCloseOutline } from 'react-icons/io5'; 
+import useDebounce from '../../hooks/useDebounce';
 
 const Shopping = () => {   
   const dispatch = useDispatch<ThunkDispatch<RootState, unknown, RootProductAction>>(); 
   const { uploadImage, onSetImage, onOpen } = useImageModal();  
   const handleUpload: VoidFunction = () => onOpen();
   const handleClear: VoidFunction = () => onSetImage(null);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const debouncedSearchTerm = useDebounce(searchTerm, 1000);
+
   const handleSearch: VoidFunction = async() => {
     const formData = new FormData();
     if(uploadImage){ 
@@ -23,8 +27,12 @@ const Shopping = () => {
         await dispatch(getProductsByImage(formData)); 
     }
   } 
+  useEffect(() => { 
+    console.log('Searching for:', debouncedSearchTerm);
+    dispatch(getProducts({ search: searchTerm })); 
+  }, [debouncedSearchTerm]);
+
   useEffect(() => {
-    dispatch(getProducts({})); 
     getCategories();
   },[]);  
   return (
@@ -34,8 +42,8 @@ const Shopping = () => {
           <p className='text-xl font-medium pl-2 lg:pl-20'>Product List</p> 
           <div className={`border-2 border-gray-200  relative focus:ring-[#6469ff] focus:border-[#6469ff]  text-base rounded-3xl outline-none`}>
             <input
-              value={""}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {}} 
+              value={searchTerm}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(event.target.value)} 
               placeholder='Search...' 
               className='w-full px-4 py-2 outline-none rounded-3xl'
             />
@@ -53,7 +61,7 @@ const Shopping = () => {
                   : null
             }  
           </div> 
-            <IconButton icon={CiSearch} hanldeClick={handleSearch} className='bg-secondary text-white'/>  
+          <IconButton icon={CiSearch} hanldeClick={handleSearch} className='bg-secondary text-white'/>  
         </div>
         <Categories/>
       </div>

@@ -19,19 +19,22 @@ import { NavLink } from "react-router-dom";
 import useOrderModal from "../../../hooks/zustands/useOrderModal";
 import { IoAdd, IoRemove } from "react-icons/io5";
 import { CategoryProps } from "../../../types/Category.interface";
+import useAuthenticationModal from "../../../hooks/zustands/useAuthenticationModal";
 
 
 const Details: React.FC<ProductDetailsDto> = (data) => {   
-    console.log(data);
     
     const [currentImage, setCurrentImage] = useState<number>(0);
     const handleImageChange = (step: number) => setCurrentImage(step); 
     const dispatch = useDispatch<ThunkDispatch<RootState, unknown, RootCartAction>>();
-    const { error, isLoading }  = useSelector((state: RootState) => state.cart);  
+    const { error, isLoading }  = useSelector((state: RootState) => state.cart); 
+    const { user }  = useSelector((state: RootState) => state.auth);  
+
     const { onClose } = useProductDetailsModal();
     const { onShow } = useToast();
     const [size, setSize] = useState<string>(data ? data.size[0] : "0");
     const [quantity, setQuantity] = useState<number>(1);
+    const login = useAuthenticationModal();
     const { onOpen } = useOrderModal();
     const handleAddToTheCart = () => {   
         setTimeout(()=>{
@@ -119,7 +122,7 @@ const Details: React.FC<ProductDetailsDto> = (data) => {
                         <p className="font-medium">Quantity: </p>
                         <Box className="text-secondary w-fit">
                             <button onClick={() => setQuantity(prev => prev - 1)} ><IoRemove size={20}/></button> 
-                            <p>Quantity: {quantity}</p>
+                            <p>{quantity}</p>
                             <button onClick={() => setQuantity(prev => prev + 1)} ><IoAdd size={20}/></button>
                         </Box>
                     </div>
@@ -137,10 +140,10 @@ const Details: React.FC<ProductDetailsDto> = (data) => {
                 </div>
                 <div className='absolute bottom-3 w-min-full '> 
                     <GroupButton
-                        action={handleAddToTheCart}
+                        action={() => user ? handleAddToTheCart() : login.onOpen()}
                         label={<><CiShoppingBasket size={24}/>{isLoading ? "Loading..." :"Add Cart"}</>}
                         labelSecondary={<><CiShoppingCart size={24}/>Order now</>}
-                        secondAction={handleOrderProducts}
+                        secondAction={() => user ? handleOrderProducts : login.onOpen()}
                         primaryButtonClass='bg-secondary text-white'
                         secondaryButtonClass='border-2 text-black'
                     />

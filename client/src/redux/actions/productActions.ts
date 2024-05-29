@@ -36,13 +36,15 @@ export const getProducts = ({ search, createBy, categories, size, price }: Filte
                 const result = await apiAdminRequest({
                     url: `${query}`,  
                     data: {}, 
-                })      
-                const response = result?.data;   
-                if (response.statusCode || !Array.isArray(response)) throw new Error(response.message);  
+                })        
+                if (!result ||  result?.data?.statusCode || !Array.isArray(result?.data) ){
+                    dispatch(productsFailure(result?.data?.message || "Fetch Fail "));
+                } 
                 else{   
+                    const response = result?.data; 
                     dispatch(storeProduct(response)); 
+                    return response;
                 }
-                return response;
             },1000);
         } catch (error: any) { 
             dispatch(productsFailure(error.message)) 

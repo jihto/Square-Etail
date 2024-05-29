@@ -41,7 +41,7 @@ const FilterModal = () => {
                 categories: [...prev.categories, item]
             })) 
     } 
-    const handleFilter = () =>{ 
+    const handleFilter: VoidFunction = () =>{ 
         dispatch(getProducts({
             ...(formData.categories.length > 0 && { categories: JSON.stringify(formData.categories.map(i => i.id))}),
             ...(formData.price && { price: JSON.stringify(formData.price)}),
@@ -56,7 +56,8 @@ const FilterModal = () => {
             price: newValue
         }))
     }, [])
-    const handleClear = () =>  setFormData(initailValues);
+    const handleClear: VoidFunction = () =>  setFormData(initailValues);
+
     useEffect(()=>{
         const data = getDataFromLocalStorage("categories", []);
         setCategories(data);
@@ -79,8 +80,7 @@ const FilterModal = () => {
                         tipFormatter={(value) => `${value}`}
                         onChange={handleChangeRangePrice}
                     />
-                </div>
-                <Line/>
+                </div> 
                 <p className='text-gray-500'>Categories: </p>
                 <div className='flex-start gap-2'> 
                     {categories.map((item: CategoryProps, index: number) => {
@@ -94,8 +94,7 @@ const FilterModal = () => {
                             </Button>
                         );
                     })} 
-                </div> 
-                <Line/>
+                </div>  
                 <FormMultipleField list={size} onChangeList={setSize} title='Size' placeholder='Write the size...'/> 
                 <hr/>
                 <div className='flex-between'>

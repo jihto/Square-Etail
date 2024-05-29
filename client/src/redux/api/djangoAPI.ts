@@ -33,11 +33,11 @@ export const apiAdminRequest = async({ url, data, method , ContentType = "applic
                 'Content-Type': ContentType, 
                 'Authorization': `Bearer ${token}`
             }, 
-        })  
+        })   
         if(result.status > 400) throw new Error(result.statusText)
         return result;
     } catch (error: any) {
-        const err = error.response.data; 
+        const err = error.response; 
         return err;
     } 
 } 

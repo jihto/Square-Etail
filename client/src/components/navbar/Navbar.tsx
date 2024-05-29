@@ -1,7 +1,7 @@
 import { NavLists, NavListsIcon } from '../../constants';
 import IconButton from '../buttons/IconButton';
 import { IconType } from 'react-icons'; 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { CiStar, CiUser } from 'react-icons/ci'; 
 import Cart from '../Cart';
 import Each from '../../middlewares/Each';
@@ -32,7 +32,7 @@ const Navbar:React.FC = () => {
     const { user } = useSelector((state: RootState) => state.auth); 
     const { notifications } = useSelector((state: RootState) => state.notification);    
     const { cart } = useSelector((state: RootState) => state.cart);   
-    
+
     const navigate = useNavigate(); 
     const handleButton = (currentAction: number) => {
         if(isOpen) 

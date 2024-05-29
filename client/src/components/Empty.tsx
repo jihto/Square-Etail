@@ -18,7 +18,7 @@ const Empty:React.FC<EmptyProps> = ({
   title = "Can't find any products" 
 }) => {
   return (
-    <div className='grid-center content-center w-full gap-3 h-full'>
+    <div className='grid-center content-center w-full gap-3 h-full mt-10'>
         <Icon className='text-gray-400' size={size} />
         <p className='text-2xl text-gray-400'>{title}</p>
         {
