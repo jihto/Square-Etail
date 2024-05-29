@@ -68,8 +68,8 @@ export const getProductsByImage = (formData: FormData): ThunkAction<void, RootSt
             }
             return response;
         } catch (error: any) { 
-            dispatch(productsFailure(error.message))
             console.log(error.message);
+            dispatch(productsFailure(error.message))
         }
     }
 } 
@@ -90,8 +90,8 @@ export const getProductsAdmin = (data?: string): ThunkAction<void, RootState, un
             }
             return response;
         } catch (error: any) { 
-            dispatch(productsFailure(error.message))
             console.log(error.message);
+            dispatch(productsFailure(error.message))
         }
     }
 } 
@@ -110,8 +110,8 @@ export const getProductsInTheTrash = (): ThunkAction<void, RootState, unknown, R
             }
             return response;
         } catch (error: any) { 
-            dispatch(productsFailure(error.message))
             console.log(error.message);
+            dispatch(productsFailure(error.message))
         }
     }
 }
@@ -148,8 +148,7 @@ export const postUpdateProduct = (productId: string, formData: object): ThunkAct
                 ContentType: "multipart/form-data"
             });   
             if (response.statusCode || response?.data.error || typeof response === "string") throw new Error(response.message);  
-            else{   
-                console.log(response?.data?.data);
+            else{    
                 dispatch(changeProduct(response?.data?.data as ProductDetailsDto)); 
             }
             return response?.data.success;

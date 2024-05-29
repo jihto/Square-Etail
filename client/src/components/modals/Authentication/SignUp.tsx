@@ -18,6 +18,8 @@ interface FormValuesRegister{
     password: string;
     confirmPassword: string;
 }
+
+
 const SignUp:React.FC<{onChangeAuth: VoidFunction}> = ({onChangeAuth}) => {
     const {
         register,

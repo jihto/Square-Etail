@@ -1,5 +1,5 @@
 import { Elements } from '@stripe/react-stripe-js';
-import FormPayment from '../FormPayment';
+import FormPayment from './FormPayment';
 import { loadStripe } from '@stripe/stripe-js'; 
 import { useEffect, useState } from 'react'; 
 import { apiRequest } from '../../redux/api'; 

@@ -1,6 +1,6 @@
 import React from 'react'
 import QRCode from 'react-qr-code'
-import useOrderModal from '../hooks/zustands/useOrderModal';
+import useOrderModal from '../../hooks/zustands/useOrderModal';
 
 const FormQrCode:React.FC = () => {
     const { totalPrice } = useOrderModal(); 

@@ -100,20 +100,7 @@ export interface ColourOption {
     readonly isFixed?: boolean;
     readonly isDisabled?: boolean;
 }
-
-export const colourOptions: ColourOption[] = [
-    { label: 'ocean', value: 'Ocean'},
-    { label: 'blue', value: 'Blue', color: '#0052CC', isDisabled: true },
-    { label: 'purple', value: 'Purple', color: '#5243AA' },
-    { label: 'red', value: 'Red', color: '#FF5630', isFixed: true },
-    { label: 'orange', value: 'Orange', color: '#FF8B00' },
-    { label: 'yellow', value: 'Yellow', color: '#FFC400' },
-    { label: 'green', value: 'Green', color: '#36B37E' },
-    { label: 'forest', value: 'Forest', color: '#00875A' },
-    { label: 'slate', value: 'Slate', color: '#253858' },
-    { label: 'silver', value: 'Silver', color: '#666666' },
-];
-
+ 
 export interface BaseProps{
     name?:string;
     icon: IconType; 

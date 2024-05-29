@@ -1,9 +1,7 @@
 import React from 'react';
 import useOrderDetailsModal from '../hooks/zustands/useOrderDetailsModal'
 import { OrderDto } from '../types/Order.dto'
-import Proccess from './Proccess';
-import GroupButton from './buttons/GroupButon';
- 
+import Proccess from './Proccess'; 
 
 const Confirm: React.FC<OrderDetailDto> = ({
     ...props

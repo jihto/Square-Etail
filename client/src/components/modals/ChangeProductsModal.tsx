@@ -71,8 +71,7 @@ const ChangeProductModal: React.FC = () => {
                 setError(4);
             } else if(data){   
                 const dataCategoriesUpdate = compareArray(categories, data.categories);  
-                const dataUpdate = compareObjects(data, {...values, size });   
-                console.log(dataCategoriesUpdate);
+                const dataUpdate = compareObjects(data, {...values, size });  
                 if(Object.keys(dataUpdate.obj2).length !== 0 || dataCategoriesUpdate.length > 0){
                     const formData = {
                         ...dataUpdate.obj2, 

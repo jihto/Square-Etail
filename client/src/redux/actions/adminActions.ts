@@ -2,7 +2,7 @@ import { Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';   
 import { RootState } from '../store'; 
 import { RootAdminAction, authAdminFailure, authAdminStart, logOutAdmin, loginAdminSuccess } from '../reducers/adminReducer';
-import { FormValuesLogin } from '../../types/FormValuesLogin';
+import { FormValuesLogin } from '../../types/FormValuesLogin.interface';
 import { apiAdminRequest, setAdminToken } from '../api/djangoAPI';
 
 export const adminLogin = (

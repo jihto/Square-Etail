@@ -2,7 +2,7 @@ import Each from '../../middlewares/Each'
 import DashBoardItem from '../../components/DashBoardItem'
 import { ListsDashboard } from '../../constants'  
 import { DashBoardItemProps } from '../../types/DashBoardItem.interface'  
-import { useCallback, useEffect, useState } from 'react' 
+import { useEffect, useState } from 'react' 
 import moment from 'moment'
 import Confirm from '../../components/Confirm' 
 import Box from '../../components/Box' 
@@ -10,7 +10,7 @@ import { useDispatch } from 'react-redux'
 import { ThunkDispatch } from 'redux-thunk'
 import { RootState } from '../../redux/store'
 import { RootAdminOrdersAction } from '../../redux/reducers/adminOrdersReducer'
-import { fetchDataAdminOrders } from '../../redux/actions/adminOrdersActions'
+import { getDataAdminOrders } from '../../redux/actions/adminOrdersActions'
 import { useSelector } from 'react-redux'
 import { Button } from '../../components/buttons/Button'
 import { GoPlus } from 'react-icons/go'
@@ -49,7 +49,7 @@ const AdminHome: React.FC = () => {
         setStatistic(result);
       };
       getStatisticAdmin();
-      dispatch(fetchDataAdminOrders());   
+      dispatch(getDataAdminOrders());   
       dispatch(getAdminNotifications(admin?.id)) 
     }
   }, [])  

@@ -14,7 +14,7 @@ export interface ProductDetailsDto{
     categories?: CategoryProps[];
     created_by?: string;
     picture?: string;
-    size: Array<string>;
+    size?: Array<string>;
     views?: number;
 }
  

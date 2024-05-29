@@ -19,8 +19,8 @@ export const getNotifications = (): ThunkAction<void, RootState, unknown, RootNo
             } 
             await dispatch(storeNotification(result ?? [])) ; 
         } catch (error: any) { 
-            dispatch(notificationFailure(error.message))
             console.log(error.message);
+            dispatch(notificationFailure(error.message))
         }
     }
 };   
@@ -39,8 +39,8 @@ export const getAdminNotifications = (id: string): ThunkAction<void, RootState, 
             } 
             await dispatch(storeNotification(result ?? [])) ; 
         } catch (error: any) { 
-            dispatch(notificationFailure(error.message))
             console.log(error.message);
+            dispatch(notificationFailure(error.message))
         }
     }
 };   

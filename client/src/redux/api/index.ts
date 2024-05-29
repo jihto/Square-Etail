@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios'; 
-import { ApiRequestProps } from '../../types/ApiRquest.dto';  
+import { ApiRequestProps } from '../../types/ApiRquest.interface';  
 const api = axios.create({
     baseURL: 'http://localhost:3000'
 }) 
