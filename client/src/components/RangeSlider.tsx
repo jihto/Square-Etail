@@ -59,7 +59,7 @@ interface TooltipSliderProps extends SliderProps {
     tipProps?: any;
 }
 
-const RangeSlider: React.FC<TooltipSliderProps> = ({ tipFormatter, tipProps, ...props }) => { 
+const RangeSlider: React.FC<TooltipSliderProps> = ({ tipFormatter, tipProps, onChange, ...props }) => { 
     const tipHandleRender: SliderProps['handleRender'] = (node, handleProps) => { 
         return(
         <HandleTooltip
@@ -71,7 +71,7 @@ const RangeSlider: React.FC<TooltipSliderProps> = ({ tipFormatter, tipProps, ...
         {node}
         </HandleTooltip>
     )};
-    return <Slider {...props} handleRender={tipHandleRender} />;
+    return <Slider {...props} handleRender={tipHandleRender} onChange={onChange} />;
 };
 
 export default RangeSlider;

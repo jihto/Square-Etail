@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import Modal from './Modal'; 
 import Box from '../Box';
 import Each from '../../middlewares/Each';
@@ -19,6 +19,7 @@ import { useSelector } from 'react-redux';
 import { compareObjects } from '../../utils/compareObjects'; 
 import FormSelected from '../inputs/FormSelected';  
 import { CategoryProps } from '../../types/Category.interface';
+import { compareArray } from '../../utils/compareArray';
  
 interface FormValues{
     description: string;
@@ -52,44 +53,45 @@ const ChangeProductModal: React.FC = () => {
         const index: number  = imgProduct.findIndex(i => i === null); 
         if(index !== -1){  
             setError(index); 
-        }else{
-            try { 
-                if(!data && imgProduct[0].image && imgProduct[1].image && imgProduct[2].image){
-                    const formData = new FormData();
-                    formData.append("name", values.name);
-                    formData.append("description", values.description);
-                    formData.append("price", String(values.price));
-                    formData.append("stock", String(values.stock));
-                    formData.append("picture1", imgProduct[0].image);
-                    formData.append("picture2", imgProduct[1].image);
-                    formData.append("picture3", imgProduct[2].image);  
-                    formData.append('size', JSON.stringify(size));
-                    formData.append('categories', JSON.stringify(categories));  
-                    const result: string = await dispatch(postCreateProduct(formData));
-                    toast.success(result);  
-                }
-                if(data){ 
-                    const newCategories = categories.map(i => i.id);
-                    const dataUpdate = compareObjects(data, {...values, size, categories: newCategories});    
-                    console.log(dataUpdate)
-                    if(Object.keys(dataUpdate.obj2).length !== 0 || categories.length === 0){
-                        const formData = {
-                            ...dataUpdate.obj2, 
-                            ...(imgProduct[0].image  && { picture1: imgProduct[0].image  }),
-                            ...(imgProduct[1].image  && { picture2: imgProduct[1].image  }),
-                            ...(imgProduct[2].image  && { picture3: imgProduct[2].image  }),
-                        } 
-                        // const result: string = await dispatch(postUpdateProduct(data.id, formData));
-                        // toast.success(result);
+        }else{ 
+            if(!data && imgProduct[0].image && imgProduct[1].image && imgProduct[2].image && categories.length > 0){
+                const formData = new FormData();
+                formData.append("name", values.name);
+                formData.append("description", values.description);
+                formData.append("price", String(values.price));
+                formData.append("stock", String(values.stock));
+                formData.append("picture1", imgProduct[0].image);
+                formData.append("picture2", imgProduct[1].image);
+                formData.append("picture3", imgProduct[2].image);  
+                formData.append('size', JSON.stringify(size));
+                formData.append('categories', JSON.stringify(categories));  
+                const result: string = await dispatch(postCreateProduct(formData));
+                toast.success(result);  
+            }else if (categories.length === 0){
+                setError(4);
+            } else if(data){   
+                const dataCategoriesUpdate = compareArray(categories, data.categories);  
+                const dataUpdate = compareObjects(data, {...values, size });   
+                console.log(dataCategoriesUpdate);
+                if(Object.keys(dataUpdate.obj2).length !== 0 || dataCategoriesUpdate.length > 0){
+                    const formData = {
+                        ...dataUpdate.obj2, 
+                        ...(dataCategoriesUpdate.length > 0 && { categories: JSON.stringify(dataCategoriesUpdate.map(i => i.id))}),
+                        ...(imgProduct[0].image  && { picture1: imgProduct[0].image  }),
+                        ...(imgProduct[1].image  && { picture2: imgProduct[1].image  }),
+                        ...(imgProduct[2].image  && { picture3: imgProduct[2].image  }),
+                    } 
+                    try {
+                        const result: string = await dispatch(postUpdateProduct(data.id, formData));
+                        toast.success(result);
                         onClose();
-                    }else{
-                        toast.error("Nothing to update")
+                    } catch (error) {
+                        toast.error("Update Fail")
                     }
+                }else{
+                    toast.error("Nothing to update")
                 }
-            } catch (error: any) {
-                console.log(error.message);
-                toast.error("Update fail!!"); 
-            }
+            } 
         } 
     }
 
@@ -191,8 +193,10 @@ const ChangeProductModal: React.FC = () => {
                     onChangeList={setSize}
                 />
                 <FormSelected 
+                    title='Categories'
                     values={categories}
                     onValues={setCategories}
+                    error = {error === 4}
                 />
                 <hr/>
                 <GroupButton 

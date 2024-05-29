@@ -193,10 +193,10 @@ const ListIconCategories: Array<BaseProps> = [
     },  
 ]
 
-const TypesFilter: Array<BaseProps> = [
+const IconCategoriesFilter: Array<BaseProps> = [
     {
         icon: GiBilledCap ,
-        name: "Cap"
+        name: "t-shirt"
     },{
         icon: PiSneakerMoveFill ,
         name: "Sneaker"
@@ -205,7 +205,7 @@ const TypesFilter: Array<BaseProps> = [
         name: "Clothes",
     },{
         icon: GiLargeDress,
-        name: "Dress" 
+        name: "fashion" 
     }
 ] 
 const MenuOrderList: Array<{name: React.ReactNode, color:string ,icon: IconType, }> = [
@@ -264,7 +264,7 @@ export {
     ListsDashboard,
     ListsFilter,
     ListIconCategories,     
-    TypesFilter,
+    IconCategoriesFilter,
     ListsIconHomePage,
     ContactInformation
 }
