@@ -41,23 +41,7 @@ export const apiAdminRequest = async({ url, data, method , ContentType = "applic
         return err;
     } 
 } 
- 
-
-export const fetchProductsByImage = async(formData: FormData) => {
-    try{
-        const result = await apiAdminRequest({
-            url: `/`,  
-            method: "POST",
-            data: formData,
-            ContentType: "multipart/form-data" 
-        })     
-        return result?.data;
-    } catch (error: any) {
-        const err = error.response?.data; 
-        return err;
-    } 
-}
-
+   
 export const createOrder = async(data: FormData) => {
     try{ 
         const result = await API(`order/create`, { 
@@ -85,4 +69,18 @@ export const fetchStatisticAdmin = async() => {
         return [];
     }  
 }
- 
+
+
+export const fetchCategories = async() => {
+    try{ 
+        const result = await apiAdminRequest({
+            url: 'seller/categories',
+            data: {}
+        });   
+        if(result.data.error) throw new Error(result.data.error);
+        return result?.data.data; 
+    } catch (error: any) {
+        console.log(error.response?.data);
+        return [];
+    }  
+}

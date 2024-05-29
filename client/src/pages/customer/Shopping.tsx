@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { RootState } from '../../redux/store';
 import { RootProductAction } from '../../redux/reducers/productReducer';
-import { getProducts, getProductsByImage } from '../../redux/actions/productActions';
+import { getCategories, getProducts, getProductsByImage } from '../../redux/actions/productActions';
 import { useEffect } from 'react';
 import IconButton from '../../components/buttons/IconButton'; 
 import { CiImageOn, CiSearch } from 'react-icons/ci'; 
@@ -25,6 +25,7 @@ const Shopping = () => {
   } 
   useEffect(() => {
     dispatch(getProducts({})); 
+    getCategories();
   },[]);  
   return (
     <>

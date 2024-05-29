@@ -18,9 +18,12 @@ import useToast from "../../../hooks/useToast";
 import { NavLink } from "react-router-dom";
 import useOrderModal from "../../../hooks/zustands/useOrderModal";
 import { IoAdd, IoRemove } from "react-icons/io5";
+import { CategoryProps } from "../../../types/Category.interface";
 
 
 const Details: React.FC<ProductDetailsDto> = (data) => {   
+    console.log(data);
+    
     const [currentImage, setCurrentImage] = useState<number>(0);
     const handleImageChange = (step: number) => setCurrentImage(step); 
     const dispatch = useDispatch<ThunkDispatch<RootState, unknown, RootCartAction>>();
@@ -32,7 +35,7 @@ const Details: React.FC<ProductDetailsDto> = (data) => {
     const { onOpen } = useOrderModal();
     const handleAddToTheCart = () => {   
         setTimeout(()=>{
-            dispatch(changeItemInTheCart({product: {...data, size}, count: quantity}));
+            dispatch(changeItemInTheCart({product: {...data, size: [size]}, count: quantity}));
             error ? toast.error(error) : onShow({ name: data?.name, picture: data?.picture1 });
         }, 400); 
         onClose();
@@ -40,7 +43,7 @@ const Details: React.FC<ProductDetailsDto> = (data) => {
 
     const handleOrderProducts = async() => {
         onClose();
-        onOpen([{product: {...data, size}, count: quantity}]);
+        onOpen([{product: {...data, size: [size]}, count: quantity}]);
     }
     return (
         <>
@@ -89,7 +92,7 @@ const Details: React.FC<ProductDetailsDto> = (data) => {
                         <p className='text-lg font-medium uppercase'>{data?.name}</p>
                         <p className='text-3xl font-medium'>${data?.price}</p>
                     </div>
-                    <Box className='flex items-center gap-2 w-fit h-fit py-1 px-2 rounded-full'>
+                    <Box className='flex items-center gap-2 w-fit h-fit py-1 rounded-full'>
                         <img src={`${data?.picture1}`} loading='lazy' className='w-10 h-10 rounded-full' />
                         <p>{data?.created_by}</p>  
                     </Box>
@@ -120,17 +123,17 @@ const Details: React.FC<ProductDetailsDto> = (data) => {
                             <button onClick={() => setQuantity(prev => prev + 1)} ><IoAdd size={20}/></button>
                         </Box>
                     </div>
-                    <Heading title='Product Overview:' className='bg-gray-100 lg:overflow-y-auto max-full lg:max-h-52 p-2 rounded-md'>{data?.description}</Heading> 
                     
                     <div className='flex gap-2 items-center'>
                         <p className='font-medium'>Categories:</p>
                         <Each
                             of={data?.categories || []}
-                            render={(category: string) =>
-                                <NavLink to={"/shopping"} className="text-secondary underline">{category}</NavLink>
+                            render={(category: CategoryProps) =>
+                                <NavLink to={"/shopping/?categories=[" + category.id + "]"} className="text-secondary underline">{category.name}</NavLink>
                             } 
                         />
                     </div>
+                    <Heading title='Product Overview:' className='bg-gray-100 overflow-y-auto max-h-40 p-2 rounded-md'>{data?.description}</Heading> 
                 </div>
                 <div className='absolute bottom-3 w-min-full '> 
                     <GroupButton

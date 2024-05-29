@@ -3,6 +3,8 @@ import { ProductDetailsDto } from '../../types/ProductDetails.interface';
 import { memo } from 'react'; 
 import { motion } from 'framer-motion';
 import { updateViewProduct } from '../../redux/api';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 
 interface ProductProps extends ProductDetailsDto{  
     viewDetails?: boolean; 
@@ -14,11 +16,13 @@ const Product: React.FC<ProductProps> = ({
     viewDetails,
     ...data
 }) => {   
-    const {onClose, onOpen} = useProductDetailsModal();  
+    const {onClose, onOpen} = useProductDetailsModal(); 
+    const { user } = useSelector((state: RootState ) => state.auth); 
     const handleViewProduct = async() => {  
         await onClose();
-        await updateViewProduct(data.id);
         await onOpen(data);
+        if(user)
+            updateViewProduct(data.id);
     }
     return (
         <motion.div
