@@ -73,12 +73,12 @@ export const getProductsByImage = (formData: FormData): ThunkAction<void, RootSt
         }
     }
 } 
-export const getProductsAdmin = (): ThunkAction<void, RootState, unknown, RootProductAction> => {
+export const getProductsAdmin = (data?: string): ThunkAction<void, RootState, unknown, RootProductAction> => {
     return async (dispatch: Dispatch<any>) => {
         dispatch(productsStart()); 
         try {  
             const result = await apiAdminRequest({
-                url: `product/created`,  
+                url: `product/created?search=${data || ""}`,  
                 data: {}, 
             })          
             const response = result?.data;

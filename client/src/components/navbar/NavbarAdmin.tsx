@@ -15,7 +15,7 @@ const NavbarAdmin = () => {
     return ( 
         <nav className='grid items-start grid-cols-[1fr,6fr] h-screen'>
             <nav className='grid grid-rows-4 text-center w-full gap-5 border-r-2 h-screen items-center'>
-                <div className='grid lg:flex gap-5 px-5 lg:px-10 items-center font-medium'>
+                <div className='grid-center lg:flex-center gap-5 lg:px-2'>
                     <div className='w-16 h-16 bg-secondary rounded-2xl flex justify-center items-center text-white text-xl'>T</div>
                         <div>
                             <p>DashBoard</p>  
@@ -26,7 +26,7 @@ const NavbarAdmin = () => {
                         {
                             NavAdminLists.map((item:NavListsProps, index: number) => (
                                 <NavLink to={item.link} key={index} className={({isActive}) => {
-                                    return `lg:flex font-medium items-center pl-10 justify-items-center mx-6 my-2 px-2 py-4 gap-5 
+                                    return `flex-center font-medium items-center px-5 md:px-0  w-fit lg:w-2/3 ml-1 md:ml-3 lg:mx-10 my-2 py-4 gap-5 
                                         ${isActive ? "text-white bg-secondary rounded-lg" : "text-gray-400"}`
                                 } }> 
                                     <item.icon size={25}/>

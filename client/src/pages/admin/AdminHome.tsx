@@ -66,7 +66,7 @@ const AdminHome: React.FC = () => {
           <Button className='bg-secondary text-white h-fit w-fit items-center justify-items-center' handleSubmit={() => onOpen(null)}><GoPlus /> Add product</Button>
         </div>
       </div>
-      <div className='hidden lg:px-5 lg:flex gap-5'> 
+      <div className='lg:px-5 flex gap-5'> 
         {
           statistic && <Each 
             of={ListsDashboard}
@@ -74,9 +74,9 @@ const AdminHome: React.FC = () => {
           />
         }
       </div>
-      <div className='grid lg:grid-cols-[2fr,1fr] lg:px-5 gap-5'>
-        <div className='p-4 bg-white text-black rounded-lg shadow-xl border border-gray-200'> 
-        <p className='text-lg font-medium mb-6'>Current order</p>
+      <div className='grid lg:grid-cols-[2fr,1fr] gap-1 lg:px-5 xl:gap-5'>
+        <div className='md:mx-2 mx-0 p-4 bg-white text-black rounded-lg shadow-xl border border-gray-200'> 
+          <p className='text-lg font-medium mb-6'>Current order</p>
           <div className='scroll-mt-6 snap-start grid gap-2 items-start overflow-y-scroll overflow-x-hidden h-[300px] lg:h-[600px]'>
             <table className='w-full text-center text-gray-500 ' border={1}>
               <thead>
@@ -116,7 +116,7 @@ const AdminHome: React.FC = () => {
             </table>
           </div>
         </div>  
-        <div className='p-4 bg-white text-black rounded-lg  shadow-xl border border-gray-200'> 
+        <div className='md:mx-2 mx-0 p-4 bg-white text-black rounded-lg  shadow-xl border border-gray-200'> 
           <p className='text-lg font-medium mb-6'>Order:</p>
           <div className='scroll-mt-6 snap-start flex flex-col w-full items-start gap-2 overflow-y-scroll overflow-x-hidden h-[380px] lg:h-[600px]'>
             <Each 

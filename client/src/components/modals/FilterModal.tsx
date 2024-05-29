@@ -1,9 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import Modal from './Modal'
-import { Button } from '../buttons/Button'
-import useFilterodal from '../../hooks/zustands/useFilterModal'  
-import { IconCategoriesFilter } from '../../constants'
-import Line from '../Line'
+import Modal from './Modal';
+import { Button } from '../buttons/Button';
+import useFilterodal from '../../hooks/zustands/useFilterModal';
+import { IconCategoriesFilter } from '../../constants';
 import RangeSlider from '../RangeSlider';
 import FormMultipleField from '../inputs/FormMultipleField';
 import { getDataFromLocalStorage } from '../../utils/checkLocalStorage';
