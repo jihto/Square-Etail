@@ -15,7 +15,7 @@ const Avatar: React.FC<AvatarProps> = ({
     return (
         <img 
             className={`w-${size} h-${size} rounded-full`} 
-            src={imgUrl || user?.avatar || "avatar.jpg"}
+            src={imgUrl || user?.avatar || "src/assets//images/avatar_default.jpg"}
             alt='avatar'
         />
     )

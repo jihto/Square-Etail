@@ -8,6 +8,7 @@ import { memo } from "react";
 const ItemOrder: React.FC<OrderDto> = (item: OrderDto) => {
     const { id, customerName, address, phone, createdAt, products } = item;  
     const orderDetailsModal = useOrderDetailsModal();
+    console.log(products);
     return (
         <li className="border-[1px] shadow hover:shadow-lg border-gray-300 rounded-lg p-2">  
             <div className="flex-between">

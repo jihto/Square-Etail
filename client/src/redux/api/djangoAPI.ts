@@ -1,5 +1,5 @@
-import axios from "axios";
-import { ApiRequestProps } from "../../types/ApiRquest.dto";
+import axios, { AxiosResponse } from "axios";
+import { ApiRequestProps } from "../../types/ApiRquest.interface";
 import { getDataFromLocalStorage } from "../../utils/checkLocalStorage";
  
 
@@ -26,18 +26,18 @@ export function setAdminToken(token: string){
 
 export const apiAdminRequest = async({ url, data, method , ContentType = "application/json"}: ApiRequestProps) => {   
     try {  
-        const result = await API(url,{
+        const result: AxiosResponse = await API(url,{
             method: method || "GET",
             data,   
             headers: {  
                 'Content-Type': ContentType, 
                 'Authorization': `Bearer ${token}`
             }, 
-        })  
+        })   
         if(result.status > 400) throw new Error(result.statusText)
         return result;
     } catch (error: any) {
-        const err = error.response.data; 
+        const err = error.response; 
         return err;
     } 
 } 
@@ -58,7 +58,7 @@ export const createOrder = async(data: FormData) => {
  
 export const fetchStatisticAdmin = async() => {
     try{ 
-        const result = await apiAdminRequest({
+        const result: AxiosResponse = await apiAdminRequest({
             url: 'seller/statistic',
             data: {}
         });   
@@ -73,7 +73,7 @@ export const fetchStatisticAdmin = async() => {
 
 export const fetchCategories = async() => {
     try{ 
-        const result = await apiAdminRequest({
+        const result: AxiosResponse = await apiAdminRequest({
             url: 'seller/categories',
             data: {}
         });   

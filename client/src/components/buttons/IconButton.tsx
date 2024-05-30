@@ -27,7 +27,7 @@ const IconButton: React.FC<IconButtonProp> = ({
             `}
             onClick={hanldeClick}
         >
-            {text} 
+            <p className='hidden md:block'>{text} </p>
             <Icon size={size}/>
         </button>
     )

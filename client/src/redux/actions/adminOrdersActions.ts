@@ -4,7 +4,7 @@ import { ThunkAction } from "redux-thunk";
 import { RootState } from "../store";  
 import { RootAdminOrdersAction, adminOrdersFailure, adminOrdersStart, confirmOrder, storeAdminOrders } from "../reducers/adminOrdersReducer";
 
-export const fetchDataAdminOrders = (): ThunkAction<void, RootState, unknown, RootAdminOrdersAction> => {
+export const getDataAdminOrders = (): ThunkAction<void, RootState, unknown, RootAdminOrdersAction> => {
     return async (dispatch: Dispatch<any>) => {
         dispatch(adminOrdersStart()); 
         try {   
@@ -16,8 +16,8 @@ export const fetchDataAdminOrders = (): ThunkAction<void, RootState, unknown, Ro
             const response = result.data.data; 
             await dispatch(storeAdminOrders(response));  
         } catch (error: any) { 
-            dispatch(adminOrdersFailure(error.message))
             console.log(error.message);
+            dispatch(adminOrdersFailure(error.message))
         }
     }
 };   
@@ -32,8 +32,7 @@ export const putConfirmOrder = (id: string): ThunkAction<Promise<string>, RootSt
                 method: "PUT",
                 data: {"orderDetailId" : id}, 
                 ContentType:  "multipart/form-data"
-            })        
-            console.log(result);
+            })         
             if(result.error || result.data.error) throw new Error(result.error); 
             if(result.data) dispatch(confirmOrder(result.data.data));
             return result?.data.success;
@@ -53,8 +52,7 @@ export const putCancelOrder = (id: string): ThunkAction<Promise<string>, RootSta
                 method: "PUT",
                 data: {"orderDetailId" : id}, 
                 ContentType:  "multipart/form-data"
-            })        
-            console.log(result);
+            })         
             if(result.error || result.data.error) throw new Error(result.error); 
             if(result.data) dispatch(confirmOrder(result.data.data));
             return result?.data.success;

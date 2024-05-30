@@ -36,13 +36,15 @@ export const getProducts = ({ search, createBy, categories, size, price }: Filte
                 const result = await apiAdminRequest({
                     url: `${query}`,  
                     data: {}, 
-                })      
-                const response = result?.data;   
-                if (response.statusCode || !Array.isArray(response)) throw new Error(response.message);  
+                })        
+                if (!result ||  result?.data?.statusCode || !Array.isArray(result?.data) ){
+                    dispatch(productsFailure(result?.data?.message || "Fetch Fail "));
+                } 
                 else{   
+                    const response = result?.data; 
                     dispatch(storeProduct(response)); 
+                    return response;
                 }
-                return response;
             },1000);
         } catch (error: any) { 
             dispatch(productsFailure(error.message)) 
@@ -66,17 +68,17 @@ export const getProductsByImage = (formData: FormData): ThunkAction<void, RootSt
             }
             return response;
         } catch (error: any) { 
-            dispatch(productsFailure(error.message))
             console.log(error.message);
+            dispatch(productsFailure(error.message))
         }
     }
 } 
-export const getProductsAdmin = (): ThunkAction<void, RootState, unknown, RootProductAction> => {
+export const getProductsAdmin = (data?: string): ThunkAction<void, RootState, unknown, RootProductAction> => {
     return async (dispatch: Dispatch<any>) => {
         dispatch(productsStart()); 
         try {  
             const result = await apiAdminRequest({
-                url: `product/created`,  
+                url: `product/created?search=${data || ""}`,  
                 data: {}, 
             })          
             const response = result?.data;
@@ -88,8 +90,8 @@ export const getProductsAdmin = (): ThunkAction<void, RootState, unknown, RootPr
             }
             return response;
         } catch (error: any) { 
-            dispatch(productsFailure(error.message))
             console.log(error.message);
+            dispatch(productsFailure(error.message))
         }
     }
 } 
@@ -108,8 +110,8 @@ export const getProductsInTheTrash = (): ThunkAction<void, RootState, unknown, R
             }
             return response;
         } catch (error: any) { 
-            dispatch(productsFailure(error.message))
             console.log(error.message);
+            dispatch(productsFailure(error.message))
         }
     }
 }
@@ -146,8 +148,7 @@ export const postUpdateProduct = (productId: string, formData: object): ThunkAct
                 ContentType: "multipart/form-data"
             });   
             if (response.statusCode || response?.data.error || typeof response === "string") throw new Error(response.message);  
-            else{   
-                console.log(response?.data?.data);
+            else{    
                 dispatch(changeProduct(response?.data?.data as ProductDetailsDto)); 
             }
             return response?.data.success;

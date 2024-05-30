@@ -47,8 +47,7 @@ export const userRegister = (
           url: "auth/register",
           data: props,
           method: "POST" 
-      });
-      console.log(response)
+      }); 
       if (response.statusCode) {
         throw new Error(response.message || "Server error");  
       }
@@ -111,8 +110,7 @@ export const userLogout = (): ThunkAction<void, RootState, unknown, RootAuthActi
             url: `cart/update/${cartData._id}`,
             data: { products: products },
             method: "PUT" 
-        }); 
-        console.log(response)
+        });  
         if (response.statusCode !== 200) throw new Error('response.message');
         dispatch(logOut());
       }   

@@ -9,12 +9,36 @@ import { PiSneakerMoveFill } from "react-icons/pi";
 import { SiAdidas, SiBluesky, SiImessage, SiNewbalance, SiNike, SiPkgsrc, SiPuma, SiRocketdotchat, SiWhatsapp } from "react-icons/si";
 import { variantsBottom, variantsRight } from "../styles/animation";
 import {previousMonth} from '../utils/previousMonth';
+import {AiFillSkin } from 'react-icons/ai';
+
 export interface NavListsProps{
     name: string;
     link: string;
     icon: IconType;
 } 
+interface ListsProps{
+    title: string;
+    items: string[];
+}
 
+const ListItemFooter: ListsProps[] = [
+    {
+        title: "Products",
+        items: ["Shoes", "Apparel"]
+    },{
+        title: "Collections",
+        items: ['Nike', 'Adidas', 'Vans',]
+    },{
+        title:"Legal",
+        items:["Privacy Policy", 'Terms and Conditions']
+    },{
+        title:"Featured",
+        items:["New Arrivals", 'Sale', "Start Selling"]
+    },{
+        title:"Support",
+        items:["Contact us", 'Give feedback', "Help center"]
+    }
+]
 const NavLists:Array<NavListsProps>  = [
     {
         name: "Home",
@@ -98,20 +122,7 @@ export interface ColourOption {
     readonly isFixed?: boolean;
     readonly isDisabled?: boolean;
 }
-
-export const colourOptions: ColourOption[] = [
-    { label: 'ocean', value: 'Ocean'},
-    { label: 'blue', value: 'Blue', color: '#0052CC', isDisabled: true },
-    { label: 'purple', value: 'Purple', color: '#5243AA' },
-    { label: 'red', value: 'Red', color: '#FF5630', isFixed: true },
-    { label: 'orange', value: 'Orange', color: '#FF8B00' },
-    { label: 'yellow', value: 'Yellow', color: '#FFC400' },
-    { label: 'green', value: 'Green', color: '#36B37E' },
-    { label: 'forest', value: 'Forest', color: '#00875A' },
-    { label: 'slate', value: 'Slate', color: '#253858' },
-    { label: 'silver', value: 'Silver', color: '#666666' },
-];
-
+ 
 export interface BaseProps{
     name?:string;
     icon: IconType; 
@@ -134,10 +145,7 @@ const ListsFilter: Array<BaseProps> = [
     },{
         name: "Puma",
         icon: SiPuma  , 
-    },{
-        name:"Sneaker",
-        icon: GiBilledCap , 
-    }
+    }, 
 ]
 
 const ListsIconHomePage: Array<BaseProps> = [
@@ -195,7 +203,7 @@ const ListIconCategories: Array<BaseProps> = [
 
 const IconCategoriesFilter: Array<BaseProps> = [
     {
-        icon: GiBilledCap ,
+        icon: AiFillSkin  ,
         name: "t-shirt"
     },{
         icon: PiSneakerMoveFill ,
@@ -206,6 +214,9 @@ const IconCategoriesFilter: Array<BaseProps> = [
     },{
         icon: GiLargeDress,
         name: "fashion" 
+    },{
+        icon: GiBilledCap ,
+        name: "cap" 
     }
 ] 
 const MenuOrderList: Array<{name: React.ReactNode, color:string ,icon: IconType, }> = [
@@ -266,7 +277,8 @@ export {
     ListIconCategories,     
     IconCategoriesFilter,
     ListsIconHomePage,
-    ContactInformation
+    ContactInformation, 
+    ListItemFooter
 }
 
 

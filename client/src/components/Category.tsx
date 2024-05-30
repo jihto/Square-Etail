@@ -1,7 +1,9 @@
+import { IconType } from "react-icons";
 
-import { ListsCategoriesProps } from "../constants";
-
-interface CategoryProps extends ListsCategoriesProps{
+ 
+interface CategoryProps{
+    name: string;
+    icon: IconType;
     isHidden?:boolean;
     isActive: boolean;
     onChangeState: VoidFunction;

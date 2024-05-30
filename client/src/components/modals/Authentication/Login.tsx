@@ -9,10 +9,12 @@ import toast from "react-hot-toast";
 import toastActions from "../../../utils/toastActions";
 import FormField from "../../inputs/FormField";
 import { Button } from "../../buttons/Button"; 
-import { FormValuesLogin } from "../../../types/FormValuesLogin";  
+import { FormValuesLogin } from "../../../types/FormValuesLogin.interface";  
+import { useSelector } from "react-redux";
 
 const Login: React.FC<{onChangeAuth: VoidFunction}> = ({ onChangeAuth }) => { 
     const dispatch = useDispatch<ThunkDispatch<RootState, unknown, RootAuthAction>>();  
+    const { isLoading } = useSelector((state: RootState) => state.auth);
     const {
         register,
         handleSubmit,
@@ -75,7 +77,7 @@ const Login: React.FC<{onChangeAuth: VoidFunction}> = ({ onChangeAuth }) => {
                 <p>Don't have an account?</p> 
                 <strong className="underline text-secondary"> Sign Up</strong> 
             </button>  
-            <Button type="submit" className='bg-secondary text-white' > Sign In </Button> 
+            <Button type="submit" className='bg-secondary text-white' disabled={isLoading}> Sign In </Button> 
         </form>
     )
 }

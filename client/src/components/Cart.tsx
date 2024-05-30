@@ -12,10 +12,12 @@ import { RootCartAction } from '../redux/reducers/cartReducer';
 import { deleteItemFromTheCart } from '../redux/actions/cartActions';
 import toast from 'react-hot-toast';
 import Empty from './Empty';
+import useAuthenticationModal from '../hooks/zustands/useAuthenticationModal';
 
 const Cart = () => {    
-    const { cart } = useSelector((state: RootState) => state.cart); 
+    const { cart } = useSelector((state: RootState) => state.cart);  
     const orderModal = useOrderModal(); 
+    const { onOpen } = useAuthenticationModal();
     const dispatch = useDispatch<ThunkDispatch<RootState, unknown, RootCartAction>>();
     const handleOrder = () => cart.products?.length > 0 ? orderModal.onOpen(cart.products) : toast.error("Cart is empty"); 
     return (
@@ -41,7 +43,7 @@ const Cart = () => {
             <GroupButon 
                 label='Check out'
                 labelSecondary='Remove All'
-                action={handleOrder}
+                action={() => cart._id ? handleOrder() : onOpen()}
                 secondAction={()=>dispatch(deleteItemFromTheCart())}
                 secondaryButtonClass='text-white shadow bg-[#ff6b6b]'
                 primaryButtonClass='bg-[#4a4fff] text-white shadow shadow-secondary'

@@ -1,7 +1,7 @@
 
-import usePaymentForm from '../hooks/usePaymentForm';
+import usePaymentForm from '../../hooks/usePaymentForm';
 import { PaymentElement } from '@stripe/react-stripe-js'; 
-import { Button } from './buttons/Button'; 
+import { Button } from '../buttons/Button'; 
 
 const FormPayment = () => {
     const { handleSubmit } = usePaymentForm(); 

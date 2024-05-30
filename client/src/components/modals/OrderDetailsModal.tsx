@@ -37,7 +37,8 @@ const OrderDetailsModal = () => {
                 onClose();    
             }
         } catch (error: any) {
-            toast.error(error)
+            console.log({error});
+            toast.error("Confirm order fail!!")
         }
     }
 
@@ -50,8 +51,8 @@ const OrderDetailsModal = () => {
             }
             onClose();
         } catch (error: any) {
-            console.log({error})
-            toast.error(error)
+            console.log({error});
+            toast.error("Cancel order Fail!!")
         }
     }
 

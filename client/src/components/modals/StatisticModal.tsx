@@ -9,33 +9,38 @@ import useStatisticModal from '../../hooks/zustands/useStatisticModal'
 import { apiAdminRequest } from '../../redux/api/djangoAPI' 
 import LineChart from '../charts/LineChart'
 import { IoArrowUp, IoEgg } from 'react-icons/io5'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../redux/store'
 
 
 
 const StatisticModal:React.FC = () => {
     const { isOpen, onClose, type, description } = useStatisticModal(); 
     const [data, setData] = React.useState<number[]>([]);
+    const { admin } = useSelector((state: RootState) => state.admin);
     const [ percent, setPercent ] = useState<number>(0); 
     const currentMonth:number = new Date().getMonth();  
     useEffect(() => {
-        const getStatistic = async() => {
-            try {
-                const response = await apiAdminRequest({
-                    url: `seller/statistic/${type}`,
-                    data: {}
-                }); 
-                if(response?.data && Array.isArray(response?.data?.data)){ 
-                    const result = response.data.data;
-                    if(result){    
-                        setData(result);
-                        setPercent((((result[currentMonth] - result[currentMonth - 1]) / (result[currentMonth] + result[currentMonth - 1]))) * 100) ;
-                    }   
+        if(admin){
+            const getStatistic = async() => {
+                try {
+                    const response = await apiAdminRequest({
+                        url: `seller/statistic/${type}`,
+                        data: {}
+                    }); 
+                    if(response?.data && Array.isArray(response?.data?.data)){ 
+                        const result = response.data.data;
+                        if(result){    
+                            setData(result);
+                            setPercent((((result[currentMonth] - result[currentMonth - 1]) / (result[currentMonth] + result[currentMonth - 1]))) * 100) ;
+                        }
+                    }
+                } catch (error) { 
                 }
-            } catch (error) { 
             }
+            getStatistic()  
         }
-        getStatistic()  
-    },[isOpen]);
+    },[type]);
     return (
         <Modal 
             isOpen={isOpen}
@@ -45,15 +50,16 @@ const StatisticModal:React.FC = () => {
         >    
             { type === "product" ? <BarChart values={data} type={type}/> : <LineChart values={data} type={type}/> }  
             <p className='text-center my-5 text-lg font-medium text-gray-500'>{description}</p>
-            {type === "product"
-                ? null
-                : <div className={`rounded-lg shadow-md ${percent > 0 ? "bg-green-400" : percent === 0 ? "bg-secondary" : "bg-red-400"}  text-white p-4 flex-between gap-5`}>
-                    <div>
-                        <p className='text-lg font-medium'>10,000</p>    
-                        <p>Solds this year</p>
+            {
+                type === "product"
+                    ? null
+                    : <div className={`rounded-lg shadow-md ${percent > 0 ? "bg-green-400" : percent === 0 ? "bg-secondary" : "bg-red-400"}  text-white p-4 flex-between gap-5`}>
+                        <div>
+                            <p className='text-lg font-medium'>10,000</p>    
+                            <p>Solds this year</p>
+                        </div>
+                        <p className='flex'>{percent}% {percent > 0 ? <IoArrowUp/> : percent === 0 ? <IoEgg/> : <IoMdArrowDown />}</p>
                     </div>
-                    <p className='flex'>{percent}% {percent > 0 ? <IoArrowUp/> : percent === 0 ? <IoEgg/> : <IoMdArrowDown />}</p>
-                </div>
             }
         </Modal>
     )

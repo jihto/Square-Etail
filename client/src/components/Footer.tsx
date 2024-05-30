@@ -8,32 +8,10 @@ import Each from "../middlewares/Each";
 import useInView from "../hooks/useInView";
 import { variantsBottom, variantsTop } from "../styles/animation";
 import { motion } from 'framer-motion';
-import { ContactInformation } from "../constants";
+import { ContactInformation, ListItemFooter } from "../constants";
 interface FooterProps {}
 
-interface ListsProps{
-    title: string;
-    items: string[];
-}
-
-const lists: ListsProps[] = [
-    {
-        title: "Products",
-        items: ["Shoes", "Apparel"]
-    },{
-        title: "Collections",
-        items: ['Nike', 'Adidas', 'Vans',]
-    },{
-        title:"Legal",
-        items:["Privacy Policy", 'Terms and Conditions']
-    },{
-        title:"Featured",
-        items:["New Arrivals", 'Sale', "Start Selling"]
-    },{
-        title:"Support",
-        items:["Contact us", 'Give feedback', "Help center"]
-    }
-]
+ 
 
 
 const Footer: React.FC<FooterProps> = () =>{ 
@@ -58,20 +36,20 @@ const Footer: React.FC<FooterProps> = () =>{
                     </div>
             </div>
             <Container>
-                <div className="grid md:flex gap-5 justify-between pb-24 border-t-2 border-gray-400 pt-5"> 
+                <div className="grid md:flex gap-5 justify-between pb-24 border-t-2 border-gray-400 pt-5 text-start"> 
                     <div className="w-full md:w-1/2 lg:w-2/5 grid gap-3">
                         <div className="font-bold lg:text-xl">
-                            LOGO
+                            SQUARE ETAIL
                         </div>
-                        <div className="text-gray-600 font-bold break-words">
+                        <div className="text-gray-600 break-words">
                             Footwear was designed and founded in 2023 by person. The theme is about sneakers ecommerce that use for shoes selling around the word.
                         </div>
-                        <Box className="grid px-8 py-6 shadow-md">
-                            <div className="flex justify-between">
+                        <Box className="grid px-8 py-6 border-2 shadow-md">
+                            <div className="grid-between">
                                 <p className="lg:text-lg break-words">Don't Wanna Miss Our Offers</p>
                                 <p className="text-gray-600 break-words">Drop your email below , and start receiving the best offer from FoorWear</p>
                             </div>
-                            <div className="w-full flex gap-5"> 
+                            <div className="w-full grid items-center grid-flow-col"> 
                                 <FormField   
                                     register={register}
                                     name="contact"
@@ -83,7 +61,7 @@ const Footer: React.FC<FooterProps> = () =>{
                     </div>
                     <div className="grid grid-cols-3 text-gray-600 md:w-1/2 text-left items-start">
                         {
-                            lists.map((item, index) => (
+                            ListItemFooter.map((item, index) => (
                                 <div key={index} className="grid gap-2 ">
                                     <p className="font-bold lg:text-lg">{item.title}</p>
                                     {

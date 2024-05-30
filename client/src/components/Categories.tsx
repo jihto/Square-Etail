@@ -1,7 +1,7 @@
 import Each from '../middlewares/Each'  
 import { useEffect, useState } from 'react' 
 import Category from './Category'
-import { ListsCategoriesProps, ListsFilter } from '../constants'
+import { ListsFilter } from '../constants'
 import { motion } from 'framer-motion'; 
 import { getProducts } from '../redux/actions/productActions';
 import { useDispatch } from 'react-redux';
@@ -44,13 +44,13 @@ const Categories:React.FC = () => {
             <div className='flex-center relative gap-2 mt-2'> 
                 <Each 
                     of={ListsFilter}
-                    render={(item: ListsCategoriesProps, index: number) => <Category isHidden={isHidden} isActive={index === clickCount ? true : false} onChangeState={() =>handleCategory(index)} {...item}/>}
+                    render={(item: any, index: number) => <Category isHidden={isHidden} isActive={index === clickCount ? true : false} onChangeState={() =>handleCategory(index)} {...item}/>}
                 />
                 <motion.div 
                     animate={{ x: clickCount*122 }}
                     transition={{ duration: 0.3 }} 
                     onClick={() => setClickCount(clickCount + 1)} 
-                    className={`absolute w-16 h-[2px] left-[29%] snap-x x-0 bg-secondary bottom-0 rounded-full`}
+                    className={`absolute w-16 h-[2px] left-[32.5%] snap-x x-0 bg-secondary bottom-0 rounded-full`}
                 >
                 </motion.div> 
                 

@@ -9,7 +9,7 @@ import FormPaymentCash from "../../inputs/FormPaymentCash";
 import { ReactNode, useEffect, useState } from "react";
 import FormPaymentCard from "../../inputs/FormPaymentCard";
 import Each from "../../../middlewares/Each"; 
-import FormQrCode from "../../FormQrCode";
+import FormQrCode from "../../inputs/FormQrCode";
 import useConfirmModal from "../../../hooks/zustands/useConfirmModal";
 
 

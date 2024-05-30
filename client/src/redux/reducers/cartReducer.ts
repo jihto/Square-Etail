@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ProductDetailsDto } from "../../types/ProductDetails.interface";
 import { CartDto, ItemInTheCartDto } from "../../types/Cart.dto";
 import { getDataFromLocalStorage } from "../../utils/checkLocalStorage";
+import { compareArray } from "../../utils/compareArray";
 
 
 interface CartState{
@@ -26,13 +27,15 @@ const cartSlice = createSlice({
     name: "cart",
     initialState,
     reducers: { 
-        changeItem(state: CartState, action: PayloadAction<ItemInTheCartDto>) {  
+        changeItem(state: CartState, action: PayloadAction<ItemInTheCartDto>) {   
             if(state.cart.products){
                 state.cart.quantity += action.payload.count;
                 state.cart.totalPrice += parseFloat(action.payload.product.price.toString()) * action.payload.count;
                 const index = state.cart.products.findIndex((item) => item.product.id === action.payload.product.id); 
                 if (index !== -1) { 
-                    state.cart.products[0].count += action.payload.count;
+                    state.cart.products[index].count += action.payload.count;
+                    const addSize: string[] = compareArray(state.cart.products[index].product.size, action.payload.product.size); 
+                    state.cart.products[index].product.size = addSize;
                 } else { 
                     state.cart.products.push({product:action.payload.product, count: action.payload.count});
                 }  
