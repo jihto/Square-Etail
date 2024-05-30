@@ -38,6 +38,7 @@ const Details: React.FC<ProductDetailsDto> = (data) => {
     const { onOpen } = useOrderModal();
     const handleAddToTheCart = () => {   
         setTimeout(()=>{
+            // console.log({product: {...data, size: [size]}, count: quantity})
             dispatch(changeItemInTheCart({product: {...data, size: [size]}, count: quantity}));
             error ? toast.error(error) : onShow({ name: data?.name, picture: data?.picture1 });
         }, 400); 

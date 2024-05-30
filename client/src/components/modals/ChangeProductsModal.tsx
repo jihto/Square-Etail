@@ -50,6 +50,7 @@ const ChangeProductModal: React.FC = () => {
         setImgUpload(index)
     }  
     const onSubmit = async(values: FormValues) =>{
+        console.log("Pass")
         const index: number  = imgProduct.findIndex(i => i === null); 
         if(index !== -1){  
             setError(index); 
@@ -64,9 +65,10 @@ const ChangeProductModal: React.FC = () => {
                 formData.append("picture2", imgProduct[1].image);
                 formData.append("picture3", imgProduct[2].image);  
                 formData.append('size', JSON.stringify(size));
-                formData.append('categories', JSON.stringify(categories));  
+                formData.append('categories', JSON.stringify(categories.map(i => i.id)));  
                 const result: string = await dispatch(postCreateProduct(formData));
                 toast.success(result);  
+                onClose();
             }else if (categories.length === 0){
                 setError(4);
             } else if(data){   
@@ -81,6 +83,7 @@ const ChangeProductModal: React.FC = () => {
                         ...(imgProduct[2].image  && { picture3: imgProduct[2].image  }),
                     } 
                     try {
+                        console.log(formData);
                         const result: string = await dispatch(postUpdateProduct(data.id, formData));
                         toast.success(result);
                         onClose();
@@ -108,14 +111,17 @@ const ChangeProductModal: React.FC = () => {
                 {imageSrc: data?.picture2 || "", image: null},
                 {imageSrc: data?.picture3 || "", image: null},
             ]);     
-        } else{
+        }
+        if(!data){
             setValue('price', 0);
             setValue('stock', 0);
             setValue("description", "");
             setValue("name", ""); 
+            setSize([]);
             setImgProduct(new Array(3).fill(null)); 
         }
-    } , [data]);  
+    } , [data, isOpen]);  
+ 
 
     useEffect(() => {
         if(imageModal.uploadImage){

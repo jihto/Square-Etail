@@ -16,7 +16,29 @@ export interface NavListsProps{
     link: string;
     icon: IconType;
 } 
+interface ListsProps{
+    title: string;
+    items: string[];
+}
 
+const ListItemFooter: ListsProps[] = [
+    {
+        title: "Products",
+        items: ["Shoes", "Apparel"]
+    },{
+        title: "Collections",
+        items: ['Nike', 'Adidas', 'Vans',]
+    },{
+        title:"Legal",
+        items:["Privacy Policy", 'Terms and Conditions']
+    },{
+        title:"Featured",
+        items:["New Arrivals", 'Sale', "Start Selling"]
+    },{
+        title:"Support",
+        items:["Contact us", 'Give feedback', "Help center"]
+    }
+]
 const NavLists:Array<NavListsProps>  = [
     {
         name: "Home",
@@ -192,6 +214,9 @@ const IconCategoriesFilter: Array<BaseProps> = [
     },{
         icon: GiLargeDress,
         name: "fashion" 
+    },{
+        icon: GiBilledCap ,
+        name: "cap" 
     }
 ] 
 const MenuOrderList: Array<{name: React.ReactNode, color:string ,icon: IconType, }> = [
@@ -252,7 +277,8 @@ export {
     ListIconCategories,     
     IconCategoriesFilter,
     ListsIconHomePage,
-    ContactInformation
+    ContactInformation, 
+    ListItemFooter
 }
 
 

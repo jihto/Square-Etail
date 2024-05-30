@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { API, createOrder } from "../api/djangoAPI"; 
+import { API } from "../api/djangoAPI"; 
 import { ThunkAction } from "redux-thunk";
 import { RootState } from "../store";
 import { RootOrderAction, ordersFailure, ordersStart, storeOrders } from "../reducers/orderReducer";
