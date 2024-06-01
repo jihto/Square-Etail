@@ -50,7 +50,6 @@ const ChangeProductModal: React.FC = () => {
         setImgUpload(index)
     }  
     const onSubmit = async(values: FormValues) =>{
-        console.log("Pass")
         const index: number  = imgProduct.findIndex(i => i === null); 
         if(index !== -1){  
             setError(index); 
@@ -83,7 +82,6 @@ const ChangeProductModal: React.FC = () => {
                         ...(imgProduct[2].image  && { picture3: imgProduct[2].image  }),
                     } 
                     try {
-                        console.log(formData);
                         const result: string = await dispatch(postUpdateProduct(data.id, formData));
                         toast.success(result);
                         onClose();

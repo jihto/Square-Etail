@@ -1,24 +1,24 @@
-import { NavLists, NavListsIcon } from '../../constants';
-import IconButton from '../buttons/IconButton';
+ 
 import { IconType } from 'react-icons'; 
 import React, { useEffect, useRef, useState } from 'react';
-import { CiStar, CiUser } from 'react-icons/ci'; 
-import Cart from '../Cart';
-import Each from '../../middlewares/Each';
-import Notification from '../Notification';
-import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { NavListsProps } from '../../constants'; 
-import useAuthenticationModal from '../../hooks/zustands/useAuthenticationModal';
-import { RootState } from '../../redux/store';
-import { useSelector } from 'react-redux';
-import { ToastItem } from '../modals/ToastItem';
+import { CiStar, CiUser } from 'react-icons/ci';  
+import { NavLink, Outlet, useNavigate } from 'react-router-dom'; 
 import { motion } from 'framer-motion'; 
 
 import socketIOClient from 'socket.io-client'; 
 import { useDispatch } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
-import { RootNotificateAction } from '../../redux/reducers/notificationReducer';
-import { postNewNotification } from '../../redux/actions/notificationAction';
+import { ThunkDispatch } from 'redux-thunk'; 
+import useAuthenticationModal from '../hooks/zustands/useAuthenticationModal';
+import Notification from '../components/Notification';
+import Cart from '../components/Cart';
+import { RootState } from '../redux/store';
+import { RootNotificateAction } from '../redux/reducers/notificationReducer';
+import { useSelector } from 'react-redux';
+import { postNewNotification } from '../redux/actions/notificationAction';
+import Each from '../middlewares/Each';
+import IconButton from '../components/buttons/IconButton';
+import { NavLists, NavListsIcon, NavListsProps } from '../constants';
+import { ToastItem } from '../components/modals/ToastItem';
  
 
 const ListsMenuUI: Array<React.ReactNode> = [<Notification/>, <Cart/>,]

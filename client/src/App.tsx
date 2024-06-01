@@ -1,12 +1,11 @@
-import Home from "./pages/customer/Home" 
-import Navbar from "./components/navbar/Navbar"
+import Home from "./pages/customer/Home"  
 import { Navigate, Route, Routes, useLocation } from "react-router-dom" 
 import Shopping from "./pages/customer/Shopping"
 import ProductDetailsModal from "./components/modals/ProductDetails/ProductDetailsModal" 
 import AuthenticationModal from "./components/modals/Authentication/AuthenticationModal"
 import Empty from "./components/Empty"
 import AdminHome from "./pages/admin/AdminHome"
-import NavbarAdmin from "./components/navbar/NavbarAdmin"
+import NavbarAdmin from "./layouts/NavbarAdmin"
 import Login from "./pages/admin/Login"
 import AdminProducts from "./pages/admin/AdminProducts"
 import AdminTrash from "./pages/admin/AdminTrash"
@@ -23,6 +22,8 @@ import FilterModal from "./components/modals/FilterModal"
 import OrderCheckingModal from "./components/modals/Order/OrderCheckingModal"
 import OrderFormModal from "./components/modals/Order/OrderFormModal" 
 import StatisticModal from "./components/modals/StatisticModal"
+import Navbar from "./layouts/Navbar"
+import ForgetPasswordModal from "./components/modals/Authentication/ForgetPasswordModal"
  
 
 function LayoutAdmin() {
@@ -58,6 +59,7 @@ function App() {
       <OrderCheckingModal/>
       <OrderFormModal/> 
       <AuthenticationModal/> 
+      <ForgetPasswordModal/>
       <OrderDetailsModal/>
       <ChangeProductModal/> 
       <ConfirmModal/>

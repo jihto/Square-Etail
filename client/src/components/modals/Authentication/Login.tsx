@@ -11,10 +11,13 @@ import FormField from "../../inputs/FormField";
 import { Button } from "../../buttons/Button"; 
 import { FormValuesLogin } from "../../../types/FormValuesLogin.interface";  
 import { useSelector } from "react-redux";
+import useForgetPasswordModal from "../../../hooks/zustands/useForgetpasswordModal";
 
 const Login: React.FC<{onChangeAuth: VoidFunction}> = ({ onChangeAuth }) => { 
     const dispatch = useDispatch<ThunkDispatch<RootState, unknown, RootAuthAction>>();  
     const { isLoading } = useSelector((state: RootState) => state.auth);
+    const { onOpen } = useForgetPasswordModal();
+    const { onClose } = useAuthenticationModal(); 
     const {
         register,
         handleSubmit,
@@ -22,7 +25,10 @@ const Login: React.FC<{onChangeAuth: VoidFunction}> = ({ onChangeAuth }) => {
     } = useForm<FormValuesLogin>({
         mode: "onChange",
     });   
-    const { onClose } = useAuthenticationModal(); 
+    const handleForgetPassword: VoidFunction = () => {
+        onClose();
+        onOpen();
+    }
     const onSubmit: SubmitHandler<FormValuesLogin> = async(data) => { 
         try{  
             const result = await dispatch(userLogin(data.username, data.password)); 
@@ -44,11 +50,7 @@ const Login: React.FC<{onChangeAuth: VoidFunction}> = ({ onChangeAuth }) => {
         <form 
             onSubmit={handleSubmit(onSubmit)}
             className='text-center gap-3 grid'
-        >  
-            <div className='grid gap-3'>
-                <p className='text-3xl font-medium'>Let's Get Started</p>
-                <p className='font-medium text-gray-500'>Please enter information below.</p>
-            </div>
+        >   
             <FormField 
                 name='username'
                 autoFocus={true}  
@@ -73,11 +75,12 @@ const Login: React.FC<{onChangeAuth: VoidFunction}> = ({ onChangeAuth }) => {
                 })}
                 error={ errors.password?.message}
             />   
-            <button onClick={onChangeAuth} className='flex-end w-full gap-3 mb-1'> 
+            <button onClick={handleForgetPassword} className="underline flex-end w-full">Forget password?</button>
+            <Button type="submit" className='bg-secondary text-white' disabled={isLoading}> Sign In </Button> 
+            <button onClick={onChangeAuth} className='flex-center w-full gap-3 mb-1'> 
                 <p>Don't have an account?</p> 
                 <strong className="underline text-secondary"> Sign Up</strong> 
             </button>  
-            <Button type="submit" className='bg-secondary text-white' disabled={isLoading}> Sign In </Button> 
         </form>
     )
 }

@@ -11,6 +11,7 @@ import { CiImageOn, CiSearch } from 'react-icons/ci';
 import useImageModal from '../../hooks/useImageModal';
 import { IoCloseOutline } from 'react-icons/io5'; 
 import useDebounce from '../../hooks/useDebounce';
+import { useParams, useSearchParams } from 'react-router-dom';
 
 const Shopping = () => {   
   const dispatch = useDispatch<ThunkDispatch<RootState, unknown, RootProductAction>>(); 
@@ -19,6 +20,9 @@ const Shopping = () => {
   const handleClear: VoidFunction = () => onSetImage(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const debouncedSearchTerm = useDebounce(searchTerm, 1000);
+  const [searchParams] = useSearchParams();
+  const createBy = searchParams.get('createBy');
+  const categories = searchParams.get('categories'); 
 
   const handleSearch: VoidFunction = async() => {
     const formData = new FormData();
@@ -26,13 +30,13 @@ const Shopping = () => {
         formData.append("query_img", uploadImage);
         await dispatch(getProductsByImage(formData)); 
     }
-  } 
+  }   
   useEffect(() => { 
     console.log('Searching for:', debouncedSearchTerm);
-    dispatch(getProducts({ search: searchTerm })); 
-  }, [debouncedSearchTerm]);
+    dispatch(getProducts({ search: searchTerm, createBy: createBy ?? "", categories: categories ?? "" })); 
+  }, [debouncedSearchTerm, createBy, categories]);
 
-  useEffect(() => {
+  useEffect(() => { 
     getCategories();
   },[]);  
   return (

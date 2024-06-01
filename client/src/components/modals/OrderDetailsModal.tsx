@@ -89,7 +89,7 @@ const OrderDetailsModal = () => {
                     <FormField register={register("address")}  name='Address' labelName='Address' disable={true} />  
                     <p className='font-medium'>Order items:</p>
                     <Box className='overflow-y-scroll overflow-x-hidden max-w-5/6 h-[330px] px-10 lg:h-[380px]'>
-                        <div className='h-full grid items-start w-full gap-3'>
+                        <div className='h-full flex flex-col w-full gap-3'>
                             <Each
                                 of={orderDetails?.products as ItemInTheCartDto[] ?? []}
                                 render={(item: ItemInTheCartDto) => (

@@ -52,7 +52,7 @@ const FormField: ForwardRefRenderFunction<HTMLInputElement, FormFieldProps> = ({
             autoComplete="current-password"
         />
         {error && (
-            <span className='flex items-center text-xs text-[#f64949fe] mt-0.5 '>{error}</span>
+            <span className='flex items-center text-sm text-[#f64949fe] mt-0.5 '>{error}</span>
         )}
     </div>
 );

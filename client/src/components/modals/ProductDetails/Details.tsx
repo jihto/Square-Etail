@@ -3,7 +3,7 @@ import Each from "../../../middlewares/Each";
 import { ProductDetailsDto } from "../../../types/ProductDetails.interface";
 import Heading from "../../Heading"; 
 import GroupButton from "../../buttons/GroupButon";
-import { memo, useState } from "react";
+import React, { memo, useState } from "react";
 import SwipeableViews from "react-swipeable-views";
 import { useDispatch } from "react-redux";
 import { ThunkDispatch } from "redux-thunk";
@@ -20,6 +20,7 @@ import useOrderModal from "../../../hooks/zustands/useOrderModal";
 import { IoAdd, IoRemove } from "react-icons/io5";
 import { CategoryProps } from "../../../types/Category.interface";
 import useAuthenticationModal from "../../../hooks/zustands/useAuthenticationModal";
+import { ListsFilter } from "../../../constants";
 
 
 const Details: React.FC<ProductDetailsDto> = (data) => {   
@@ -97,7 +98,11 @@ const Details: React.FC<ProductDetailsDto> = (data) => {
                         <p className='text-3xl font-medium'>${data?.price}</p>
                     </div>
                     <Box className='flex items-center gap-2 w-fit h-fit py-1 rounded-full'>
-                        <img src={`${data?.picture1}`} loading='lazy' className='w-10 h-10 rounded-full' />
+                        <p className="text-3xl"> 
+                            {
+                                React.createElement(ListsFilter[ListsFilter.findIndex(el => el.name === data?.created_by || "")].icon)
+                            }
+                        </p>
                         <p>{data?.created_by}</p>  
                     </Box>
                     <div className='flex gap-2 items-center'>
@@ -133,7 +138,7 @@ const Details: React.FC<ProductDetailsDto> = (data) => {
                         <Each
                             of={data?.categories || []}
                             render={(category: CategoryProps) =>
-                                <NavLink to={"/shopping/?categories=[" + category.id + "]"} className="text-secondary underline">{category.name}</NavLink>
+                                <NavLink to={"/shopping/?categories=[" + category.id + "]"} onClick={onClose} className="text-secondary underline">{category.name}</NavLink>
                             } 
                         />
                     </div>

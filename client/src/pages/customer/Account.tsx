@@ -8,7 +8,7 @@ import { FaTelegramPlane } from "react-icons/fa";
 import { LuUser2 } from "react-icons/lu";
 import GroupButton from "../../components/buttons/GroupButon" ;
 import IconButton from "../../components/buttons/IconButton";
-import { CiLogout } from "react-icons/ci";
+import { CiDeliveryTruck, CiLogout } from "react-icons/ci";
 import { useDispatch } from "react-redux";
 import { ThunkDispatch } from "redux-thunk" ;
 import { RootAuthAction } from "../../redux/reducers/authReducer";
@@ -31,6 +31,7 @@ import { MenuOrderList } from "../../constants";
 import useImageModal from "../../hooks/useImageModal";
 import { compareObjects } from "../../utils/compareObjects";
 import toastActions from "../../utils/toastActions"; 
+import Empty from "../../components/Empty";
 
 interface FormValues extends UserDto {
   // password: string;
@@ -39,12 +40,14 @@ interface FormValues extends UserDto {
 const Account: React.FC = () => {
   const dispatch = useDispatch<ThunkDispatch<RootState, unknown, RootAuthAction | RootOrderAction>>();
   const { user } = useSelector((state: RootState) => state.auth);  
-  const { orders } = useSelector((state: RootState) => state.orders);   
+  const { orders } = useSelector((state: RootState) => state.orders);
+  console.log(orders.filter(order => order.status === "cancel"))   
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [activeStep, setActiveStep] = useState<number>(0);
   const { onOpen, uploadImage, onClear } = useImageModal(); 
   const navigate = useNavigate();
+
   const {
     register,
     handleSubmit, 
@@ -223,12 +226,16 @@ const Account: React.FC = () => {
                   <li>Date Time</li>
                   <li>Phone Number</li>  
                 </ul> 
-                <ul className='scroll-mt-6 snap-start grid gap-2'>
-                  <Each
-                    of={orders}
-                    render={(item:OrderDto) => <ItemOrder {...item}/>}
-                  />
-                </ul>
+                {
+                  orders.filter(order => order.status === "pending")
+                    ? <ul className='scroll-mt-6 snap-start grid gap-2'>
+                        <Each
+                            of={orders}
+                            render={(item:OrderDto) => <ItemOrder {...item}/>}
+                          />
+                      </ul>
+                      : <Empty icon={CiDeliveryTruck } title="Empty orders"/>
+                  }
               </div>
               <div>
                 <ul className="flex mb-2 w-full px-4 py-2 rounded-md bg-red-400 text-white justify-between">
@@ -238,12 +245,16 @@ const Account: React.FC = () => {
                   <li>Date Time</li>
                   <li>Phone Number</li>  
                 </ul> 
-                <ul className='scroll-mt-6 snap-start grid gap-2'>
-                  <Each
-                    of={orders}
-                    render={(item:OrderDto) => <ItemOrder {...item}/>}
-                  />
-                </ul>
+                {
+                  orders.filter(order => order.status === "cancel").length > 0
+                    ? <ul className='scroll-mt-6 snap-start grid gap-2'>
+                      <Each
+                          of={orders}
+                          render={(item:OrderDto) => <ItemOrder {...item}/>}
+                        />
+                    </ul>
+                  : <Empty icon={CiDeliveryTruck } title="Empty orders"/>
+                } 
               </div>
             </SwipeableViews>
           </div>

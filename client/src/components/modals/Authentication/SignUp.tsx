@@ -46,11 +46,7 @@ const SignUp:React.FC<{onChangeAuth: VoidFunction}> = ({onChangeAuth}) => {
         }
     }  
     return (
-        <div className='text-center gap-3 grid'> 
-            <div className='grid gap-3'>
-                <p className='text-3xl font-medium'>Sign Up account</p>
-                <p className='font-medium text-gray-500'>Create new account fill in the blank below.</p>
-            </div> 
+        <div className='text-center gap-3 grid'>  
             <div className='grid grid-cols-2 gap-3'>
                 <FormField 
                     name='name' 
@@ -120,7 +116,7 @@ const SignUp:React.FC<{onChangeAuth: VoidFunction}> = ({onChangeAuth}) => {
                     <strong className="text-secondary underline">Log In</strong> 
                 </button>
             <hr/> 
-            <Button handleSubmit={handleSubmit(onSubmit)} className='bg-red-400 text-white'>{isLoading ? "isLoading..." :"Sign Up" }</Button> 
+            <Button handleSubmit={handleSubmit(onSubmit)}>{isLoading ? "isLoading..." :"Sign Up" }</Button> 
         </div>
     )
 }

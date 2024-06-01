@@ -51,11 +51,29 @@ const AuthenticationModal = () => {
         <Modal 
             isOpen={isOpen}
             onClose={onClose} 
-            className="w-[98%] sm:w-5/6 md:w-3/5 xl:w-1/3 h-fit"
-        >
+            className="w-[98%] sm:w-5/6 md:w-3/5 xl:w-1/3 h-fit text-center"
+        > 
+            <div className='grid gap-3'>
+                {
+                    isSignIn 
+                        ? <>
+                            <p className='text-3xl font-medium'>Let's Get Started</p>
+                            <p className='text-lg text-gray-500'>Please enter information below.</p>
+                        </>
+                        :
+                        <>
+                            <p className='text-3xl font-medium'>Sign Up account</p>
+                            <p className='text-lg text-gray-500'>Create new account fill in the blank below.</p>
+                        </> 
+                }
+            </div>
             <div className='mx-5 md:mx-6 xl:mx-8 mb-5 flex flex-col gap-5'>
                 {isSignIn ? <Login onChangeAuth={handleChangeAuth}/> : <SignUp onChangeAuth={handleChangeAuth}/>}  
-                <div className='grid grid-cols-2 justify-center gap-5 border-t-[1px] border-gray-400 pt-5'>
+                <div className='relative w-full'>
+                    <div className='w-full h-[1px] bg-gray-400'></div>
+                    <p className='bg-white absolute -top-3 left-[45%] w-10 text-gray-400 font-medium'>OR</p>
+                </div>  
+                <div className='grid grid-cols-2 justify-center gap-5'>
                     <button className='border rounded-full flex-center gap-4 items-center px-5 py-1 text-gray-700 shadow-md'>
                         <IoLogoFacebook  className='text-blue-700' size={30}/>
                         {/* <FacebookLogin

@@ -51,7 +51,7 @@ const Modal: React.FunctionComponent<ModalProps> = memo(({
             <motion.div
                 // ref={modalRef} 
                 className={`
-                    ${className || "w-[95%] md:w-1/2 xl:w-1/3 h-fit"} relative bg-white rounded-3xl
+                    ${className || "w-min-full md:w-1/2 xl:w-1/3 h-fit"} relative bg-white rounded-3xl
                 `}
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: isOpen ? 1 : 0, y: isOpen ? 0 : -20 }}
@@ -62,7 +62,7 @@ const Modal: React.FunctionComponent<ModalProps> = memo(({
                     <IconButton icon={MdClose} className="absolute right-4 top-4 bg-white border-none" hanldeClick={onClose}></IconButton> 
                 </div> 
                 { title ? <Line/> : null }
-                <div className="px-5 pb-5">
+                <div className="md:px-5 md:pb-5">
                     {children} 
                 </div>
                 {

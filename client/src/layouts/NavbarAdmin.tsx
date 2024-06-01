@@ -1,12 +1,12 @@
 import { NavLink, Outlet } from 'react-router-dom'
-import { NavAdminLists, NavListsProps } from '../../constants'
+import { NavAdminLists, NavListsProps } from '../constants'
 import { HiLogout } from 'react-icons/hi'
 import { useSelector } from 'react-redux' 
-import { RootState } from '../../redux/store'
+import { RootState } from '../redux/store'
 import { useDispatch } from 'react-redux'
 import { ThunkDispatch } from 'redux-thunk'
-import { RootAdminAction } from '../../redux/reducers/adminReducer'
-import { adminLogout } from '../../redux/actions/adminActions'
+import { RootAdminAction } from '../redux/reducers/adminReducer'
+import { adminLogout } from '../redux/actions/adminActions'
 
 const NavbarAdmin = () => {
     const { admin } = useSelector((state: RootState) => state.admin);
