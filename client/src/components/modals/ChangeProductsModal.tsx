@@ -135,8 +135,8 @@ const ChangeProductModal: React.FC = () => {
             title={<p className='text-xl ml-5 font-medium'>{data ? "Update Product" : "Create Product"}</p>} 
             className="max-h-screen w-[95%] md:w-2/3 xl:w-[35%] h-min-fit relative"
         >
-            <div className='grid gap-4 px-5'>  
-                <p className='font-medium'>Upload Image: </p>
+            <div className='grid gap-4 pt-4'>  
+                <p className='text-gray-500'>Upload Image: </p>
                 <div className='flex gap-4'>
                     <Each 
                         of={imgProduct}
@@ -151,7 +151,7 @@ const ChangeProductModal: React.FC = () => {
                                 } 
                             </Box> 
                         }
-                    /> 
+                    />  
                 </div>   
                 <hr/>
                 <FormField 
@@ -163,10 +163,16 @@ const ChangeProductModal: React.FC = () => {
                     labelName='Product name: '
                     error={errors?.name?.message}
                 />
-                <label className=' text-gray-500'>Product description</label>
-                <textarea className='border text-gray-600 h-[80px] bg-gray-50 border-gray-300 rounded-md ps-3 pt-2 outline-none max-h-[100px]' placeholder='Write description...' {...register("description", {
-                        required: "description is required",
-                })}></textarea> 
+                <div className='grid gap-2'>
+                    <label className=' text-gray-500'>Product description</label>
+                    <textarea 
+                        className='border text-gray-600 h-[80px] bg-gray-50 border-gray-300 rounded-md ps-3 pt-2 outline-none max-h-[100px]' 
+                        placeholder='Write description...' 
+                        {...register("description", {
+                            required: "description is required",
+                        })}>
+                    </textarea> 
+                </div>
                 <div className='grid grid-cols-2 gap-10 justify-between'>
                     <FormField  
                         register={register("price", {

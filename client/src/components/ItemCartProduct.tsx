@@ -19,7 +19,7 @@ const ItemCartProduct:React.FC<ItemCartProductProps> = ({
   actionButton = true,
   onRemoveItem, 
   ...data
-}) => {    
+}) => {
   const dispatch = useDispatch<ThunkDispatch<RootState, unknown, RootCartAction>>();   
   const handleIncrease: VoidFunction = () => dispatch(changeItemInTheCart({product: data?.product, count: 1})); 
   const handleDecrease: VoidFunction = () => dispatch(deleteItemFromTheCart(data?.product));
@@ -33,7 +33,8 @@ const ItemCartProduct:React.FC<ItemCartProductProps> = ({
           <p className='truncate text-ellipsis max-w-56 overflow-hidden'>{data.product?.description}</p>
           <div className='flex justify-between items-end '>
             <div className='text-sm flex gap-5 text-gray-500 mt-6'>
-              <Box className="w-fit rounded-full px-3 text-secondary"> Size: { data.product.size }
+              <Box className="w-fit rounded-full px-3 text-secondary"> 
+                Size: { data.product.size }
               </Box>
               <Box className="text-secondary">
                 { actionButton && onRemoveItem ? <button onClick={handleDecrease} ><IoRemove size={20}/></button> : <></> }

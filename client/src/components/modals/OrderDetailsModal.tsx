@@ -63,17 +63,19 @@ const OrderDetailsModal = () => {
             setValue("address", data?.address);
             setValue("code", data?.paymentId)
         }
-    }, [data])   
+    }, [data]); 
     return (
         <Modal
             isOpen={isOpen}
             onClose={onClose}
-            className="w-[95%] md:w-2/3 xl:w-2/5 h-[90%]"
+            className="w-[95%] md:w-2/3 xl:w-2/5 h-fit"
             title={`Order Details`} 
         >
             <div className="w-full h-fit grid gap-1 md:gap-2 xl:gap-3 px-2 md:px-6"> 
+                <div className='flex-between mt-5'>
                     <p className='font-medium text-lg'>Order {orderDetails?.id}  - Customer : {orderDetails?.customerName}</p>
                     <p className='text-gray-400 text-base font-normal'>Date: {moment(orderDetails?.createdAt).format("kk:mm:ss YYYY/MM/DD")}</p>
+                </div>
                     { isAdmin 
                         ? null 
                         : <Process 
@@ -88,7 +90,7 @@ const OrderDetailsModal = () => {
                     </div>
                     <FormField register={register("address")}  name='Address' labelName='Address' disable={true} />  
                     <p className='font-medium'>Order items:</p>
-                    <Box className='overflow-y-scroll overflow-x-hidden max-w-5/6 h-[330px] px-10 lg:h-[380px]'>
+                    <Box className='overflow-y-scroll overflow-x-hidden max-w-5/6 h-[330px] lg:h-[380px]'>
                         <div className='h-full flex flex-col w-full gap-3'>
                             <Each
                                 of={orderDetails?.products as ItemInTheCartDto[] ?? []}
@@ -99,26 +101,27 @@ const OrderDetailsModal = () => {
                         </div> 
                     </Box>  
                     <div>
-                    <div className='flex justify-end text-lg'>
-                        <p className='justify-between w-2/3 sm:w-2/5 lg:w-[30%] flex'><strong>Total Price: </strong> ${orderDetails?.totalPrice}</p> 
+                    <div className='flex flex-col items-end justify-end mb-3'>
+                        <p className='justify-between w-2/3 sm:w-2/5 lg:w-[30%] flex text-gray-600'><span className='font-medium'>Total Price: </span>  ${orderDetails?.totalPrice}</p> 
+                        <p className='flex justify-between w-2/3 sm:w-2/5 lg:w-[30%] text-gray-600'><span className='font-medium'>Payment with:</span>Cash</p>
                     </div>
                     {
                         isAdmin 
-                            ? (
-                                <>  
-                                    <div className='flex justify-end text-lg py-2'>
-                                        <p className='flex justify-between w-2/3 sm:w-2/5 lg:w-[30%]'><strong>Payment with: </strong>  Card</p>
-                                    </div>
-                                    <GroupButton 
-                                        action={handleConfirmOrder} 
-                                        label={"Confirm"} 
-                                        labelSecondary={"Cancel Order"} 
-                                        secondAction={handleCancelOrder}
-                                        secondaryButtonClass='bg-red-400 text-white'
-                                    />
-                                </>
-                            )
-                            :null
+                            ? (<GroupButton 
+                                    action={handleConfirmOrder} 
+                                    label={"Confirm"} 
+                                    labelSecondary={"Cancel Order"} 
+                                    secondAction={handleCancelOrder}
+                                    secondaryButtonClass='bg-red-400 text-white'
+                                /> )
+                            : (<GroupButton 
+                                action={() => {}} 
+                                label={"Received"} 
+                                labelSecondary={"Cancel"} 
+                                secondAction={() => {}}
+                                secondaryButtonClass='bg-red-400 text-white'
+                                disable={true}
+                            /> )
                     } 
                     </div>
                 </div> 

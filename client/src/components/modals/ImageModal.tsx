@@ -12,26 +12,27 @@ const ImageModal = () => {
   const [showCrop, setShowCrop] = useState<boolean>(false); 
     const [imgSrc, setImageSrc] = useState<string>("");     
     const onSelectFile = (e: any) => {
-        const file = e.target.files?.[0]; 
-        if (!file) return; 
-        const reader = new FileReader();
-        reader.addEventListener("load", () => {
-            const imageElement = new Image();
-            const imageUrl = reader.result?.toString() || "";
-            imageElement.src = imageUrl;   
-            setImageSrc(imageUrl)
-            setData(file);        
-        });
-        reader.readAsDataURL(file); 
-    }; 
+      const file = e.target.files?.[0];
+      if (!file) return;
+    
+      const reader = new FileReader();
+      reader.addEventListener("load", () => {
+        const imageElement = new Image();
+        const imageUrl = reader.result?.toString() || ""; 
+        imageElement.src = imageUrl;   
+        setImageSrc(imageUrl)
+        setData(file);        
+      }); 
+      reader.readAsDataURL(file);
+    };
     const handleCloseCrop = () => setShowCrop(false);
     const handleCompleteCrop = (newUrl: string, file: File) => { 
-        setImageSrc(newUrl)
+        setImageSrc(newUrl); 
         setData(file);
     }; 
     const handleChoose = () => { 
         if(data) {
-            onSetImage(data);
+            onSetImage(data); 
             onClose();
         }
     };

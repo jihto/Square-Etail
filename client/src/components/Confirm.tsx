@@ -17,10 +17,13 @@ const Confirm: React.FC<OrderDetailDto> = ({
         phone: props?.order?.phone,  
         totalPrice,
         createdAt: props?.order?.createdAt,
-        products: [{ product: { ...props?.product, picture1: picture}, count: props?.quantity }]
+        products: [{ product: { ...props?.product, picture1: picture, size: [props?.product?.size || "0"]}, count: props?.quantity }]
     }
     return (
-        <div onClick={() => onOpen(dataOrderDetail, true)} className={`px-4 gap-0 w-full grid hover:shadow-md border-[1px] bg-gray-100 rounded-xl py-2 text-gray-600 relative`}>
+        <div
+            onClick={() => onOpen(dataOrderDetail, true)}  
+            className={`px-4 gap-0 w-full grid hover:shadow-md border-[1px] bg-white border-gray-200 shadow-lg rounded-xl py-2 text-gray-600 relative cursor-pointer`}
+        >
             <p className='text-base'><strong>{props?.product?.name} - #{props.order.paymentId}</strong></p>
             <div className='flex justify-between items-center'>
                 <div>

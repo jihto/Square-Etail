@@ -100,7 +100,7 @@ const Details: React.FC<ProductDetailsDto> = (data) => {
                     <Box className='flex items-center gap-2 w-fit h-fit py-1 rounded-full'>
                         <p className="text-3xl"> 
                             {
-                                React.createElement(ListsFilter[ListsFilter.findIndex(el => el.name === data?.created_by || "")].icon)
+                                React.createElement(ListsFilter[ListsFilter.findIndex(el => el.name === data?.created_by || "") || 0].icon)
                             }
                         </p>
                         <p>{data?.created_by}</p>  

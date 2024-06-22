@@ -51,12 +51,12 @@ const ImageCrop:React.FC<ImageCropProps> = ({
                 // Adapt zoom based on media size to fit max height
                 onZoomChange(400 / mediaSize.naturalHeight)
               }}
-              onCropComplete={onCropComplete}
+              onCropComplete={onCropComplete} 
+              cropSize={{width: 224, height: 224}}
             />
           </div>
         )
-      }
-      {/* {croppedImage && <img className='' src={croppedImage}/> } */}
+      } 
       <div className='grid absolute bottom-0 grid-cols-2 w-1/2 mt-2'> 
         <GroupButton
           action={showCroppedImage}

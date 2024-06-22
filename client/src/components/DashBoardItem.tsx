@@ -30,7 +30,7 @@ const DashBoardItem: React.FC<Props> = ({
             <hr/>
             <div className='hidden md:flex md:gap-10 justify-between items-center'>
                 <p>Start from   {start}</p>
-                { IconStatistic && <button onClick={() => onOpen(title, description, type)}><IconStatistic size={30}/></button>}
+                { IconStatistic && type !== "views" && <button onClick={() => onOpen(title, description, type)}><IconStatistic size={30}/></button>}
             </div>
         </div>
     )

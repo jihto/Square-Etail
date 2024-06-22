@@ -15,13 +15,13 @@ import { RootState } from '../../redux/store'
 
 
 const StatisticModal:React.FC = () => {
-    const { isOpen, onClose, type, description } = useStatisticModal(); 
+    const { isOpen, onClose, type, description } = useStatisticModal();  
     const [data, setData] = React.useState<number[]>([]);
     const { admin } = useSelector((state: RootState) => state.admin);
     const [ percent, setPercent ] = useState<number>(0); 
     const currentMonth:number = new Date().getMonth();  
     useEffect(() => {
-        if(admin){
+        if(admin && isOpen){
             const getStatistic = async() => {
                 try {
                     const response = await apiAdminRequest({
@@ -40,7 +40,7 @@ const StatisticModal:React.FC = () => {
             }
             getStatistic()  
         }
-    },[type]);
+    },[type, isOpen]); 
     return (
         <Modal 
             isOpen={isOpen}

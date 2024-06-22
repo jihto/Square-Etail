@@ -15,7 +15,7 @@ interface FormValues{
 const Contact = () => { 
     const {register} = useForm<FormValues>()  
     return (
-        <article className='flex w-auto mx-5 gap-10 md:mx-20 lg:mx-40 xl:mx-80 mt-24 md:mt-[150px]'>
+        <article className=' grid md:flex w-auto mx-5 gap-10 md:mx-20 lg:mx-40 xl:mx-80 mt-24 md:mt-[150px]'>
             <section className='flex-1 grid gap-4 text-center'>  
                 <p className='text-3xl font-medium text-secondary'>Get in touch with us for more information</p>
                 <p>if you need help or have a question, we're here for you</p>
@@ -40,7 +40,7 @@ const Contact = () => {
                 </div>
                 <Button className='bg-secondary text-white'>Send Message</Button>
             </section>
-            <aside className='flex-1 grid gap-2 bg-gray-200  w-3/4 p-2 rounded-xl '>
+            <aside className='flex-1 w-full grid gap-2 bg-gray-200  md:w-3/4 p-2 rounded-xl mb-40'>
                 <div className='bg-gray-50 p-4 grid-center rounded-lg  shadow-lg hover:shadow-xl'>
                     <Heading title={<><CiLight size={40}/>Customzed software solutions</>}>
                         We create individually tailored software that meets the unique needs of our clients. 

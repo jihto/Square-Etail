@@ -14,6 +14,7 @@ const Container: React.FC<ContainerProps> = ({
             grid gap-3
             max-w-[2520px]   
             mb-auto
+            w-full
             xl:px-12
             lg:px-10
             md:px-8

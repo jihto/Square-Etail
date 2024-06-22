@@ -16,11 +16,10 @@ const NavbarAdmin = () => {
         <nav className='grid items-start grid-cols-[1fr,6fr] h-screen'>
             <nav className='grid grid-rows-4 text-center w-full gap-5 border-r-2 h-screen items-center'>
                 <div className='grid-center lg:flex-center gap-5 lg:px-2'>
-                    <div className='w-16 h-16 bg-secondary rounded-2xl flex justify-center items-center text-white text-xl'>T</div>
-                        <div>
-                            <p>DashBoard</p>  
-                            <p className='text-gray-400'>{admin?.username || "Admin"}</p>                        
-                        </div>
+                    <div className='w-16 h-16 bg-secondary rounded-2xl flex justify-center items-center text-white text-xl'>
+                        {admin?.username.split("",1)}
+                    </div> 
+                    <p className='text-gray-400'>{admin?.username || "Admin"}</p>                
                     </div>
                     <div className='grid'>
                         {

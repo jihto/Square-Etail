@@ -28,13 +28,8 @@ import ForgetPasswordModal from "./components/modals/Authentication/ForgetPasswo
 
 function LayoutAdmin() {
   const { admin } = useSelector((state: RootState) => state.admin);
-  const location = useLocation();
-
-  return admin ? (
-    <NavbarAdmin />
-  ) : (
-    <Navigate to='/auth' state={{ from: location }} replace />
-  );
+  const location = useLocation(); 
+  return admin ? ( <NavbarAdmin /> ) : ( <Navigate to='/auth' state={{ from: location }} replace /> );
 } 
 function App() {  
   return (
@@ -66,10 +61,7 @@ function App() {
       <ImageModal />
       <FilterModal/> 
       <StatisticModal/>
-      <Toaster
-        position="top-center"
-        reverseOrder={false}
-      />
+      <Toaster position="top-center" reverseOrder={false} />
     </>
   )
 }

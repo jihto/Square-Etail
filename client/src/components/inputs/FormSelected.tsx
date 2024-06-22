@@ -41,11 +41,11 @@ const FormSelected: React.FC<FormSelectedProps> = ({
         <div>
             <p className='text-gray-500 mb-2'>{title}:</p>
             <div  className={`${ error ? "border-red-400 border-[1px]" : "border-2"}  outline-none pl-2 pr-4 py-3 rounded-md relative text-gray-500`}>
-                <div className='absolute bg-white w-1/2 flex gap-3 top-1'>
+                <div className='absolute bg-white w-1/2 flex gap-2 top-1'>
                     {
                         values
                             ? values.map(item => (
-                                <Box className='w-fit rounded-full px-4' key={item.id}>
+                                <Box className='w-fit rounded-xl px-2' key={item.id}>
                                     {item.name}
                                     <IoClose className='text-red-400 cursor-pointer' onClick={() => handleRemove(item)}/>
                                 </Box>
