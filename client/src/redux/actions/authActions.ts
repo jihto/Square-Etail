@@ -105,13 +105,13 @@ export const userLogout = (): ThunkAction<void, RootState, unknown, RootAuthActi
       //Update cart item to server before log out
       const cartData = getDataFromLocalStorage("cart", null);
       if(cartData){
-        const products = cartData.products.map((item: ItemInTheCartDto) =>  ({...item, product:item.product.id.toString()}))
+        const products = cartData.products.map((item: ItemInTheCartDto) =>  ({...item, product:{ _id: item.product.id.toString(), size: item.product.size.toString() }}))
         const response = await apiRequest({ 
             url: `cart/update/${cartData._id}`,
             data: { products: products },
             method: "PUT" 
-        });  
-        if (response.statusCode !== 200) throw new Error('response.message');
+        });   
+        if (response.status !== 200) throw new Error(response.message);
         dispatch(logOut());
       }   
     } catch (error: any) {

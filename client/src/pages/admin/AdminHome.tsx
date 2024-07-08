@@ -1,24 +1,24 @@
 import Each from '../../middlewares/Each'
-import DashBoardItem from '../../components/DashBoardItem'
+import DashBoardItem from '../../components/common/DashBoardItem'
 import { ListsDashboard } from '../../constants'  
 import { DashBoardItemProps } from '../../types/DashBoardItem.interface'  
 import { useEffect, useState } from 'react' 
 import moment from 'moment'
-import Confirm from '../../components/Confirm' 
-import Box from '../../components/Box' 
+import Confirm from '../../components/features/Order/Order' 
+import Box from '../../components/common/Box' 
 import { useDispatch } from 'react-redux'
 import { ThunkDispatch } from 'redux-thunk'
 import { RootState } from '../../redux/store'
 import { RootAdminOrdersAction } from '../../redux/reducers/adminOrdersReducer'
 import { getDataAdminOrders } from '../../redux/actions/adminOrdersActions'
 import { useSelector } from 'react-redux'
-import { Button } from '../../components/buttons/Button'
+import { Button } from '../../components/common/buttons/Button'
 import { GoPlus } from 'react-icons/go'
-import IconButton from '../../components/buttons/IconButton'
+import IconButton from '../../components/common/buttons/IconButton'
 import { CiBellOn } from 'react-icons/ci'
 import useChangeProductModal from '../../hooks/zustands/useChangeProductModal'
 import { fetchStatisticAdmin } from '../../redux/api/djangoAPI'
-import Notification from '../../components/Notification'
+import Notification from '../../components/common/Notification'
 import { getAdminNotifications } from '../../redux/actions/notificationAction'
 
 export interface StatisticProps { 
@@ -91,7 +91,7 @@ const AdminHome: React.FC = () => {
               </thead>
               <tbody>
                 <Each 
-                  of={completedOrders ?? []}
+                  of={completedOrders || []}
                   render={(item: OrderDetailDto) =>  
                     <tr className='border-b-2 border-gray-300 text-center '>
                       <td>{item?.order?.paymentId}</td>
@@ -120,7 +120,7 @@ const AdminHome: React.FC = () => {
           <p className='text-lg font-medium mb-6'>Order:</p>
           <div className='scroll-mt-6 snap-start flex flex-col w-full items-start gap-2 overflow-y-scroll overflow-x-hidden h-[380px] lg:h-[600px]'>
             <Each 
-              of={ peadingOrders ?? []}
+              of={ peadingOrders || []}
               render={(item: OrderDetailDto ) =>  <Confirm {...item}/>}
             />
           </div>

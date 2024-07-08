@@ -1,7 +1,7 @@
 import { IconType } from "react-icons";
-import Container from "../../components/Container"; 
-import Footer from "../../components/Footer";
-import { Button } from "../../components/buttons/Button"; 
+import Container from "../../components/common/Container"; 
+import Footer from "../../components/layouts/Footer";
+import { Button } from "../../components/common/buttons/Button"; 
 import { ListsIconHomePage } from "../../constants";
 import Each from "../../middlewares/Each";   
 import { motion } from 'framer-motion';

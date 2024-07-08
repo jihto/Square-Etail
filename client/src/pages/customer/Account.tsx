@@ -1,18 +1,17 @@
-import Container from "../../components/Container";
-import FormIconField from "../../components/inputs/FormIconField";
+import Container from "../../components/common/Container"; 
 import { MdMailOutline,  MdOutlinePassword } from "react-icons/md"; 
 import { IoEarth, IoLocationOutline } from "react-icons/io5";
 import { IoMdTransgender } from "react-icons/io";
 import { HiOutlineMail, HiOutlinePhone } from "react-icons/hi";
 import { FaTelegramPlane } from "react-icons/fa";
 import { LuUser2 } from "react-icons/lu";
-import GroupButton from "../../components/buttons/GroupButon" ;
-import IconButton from "../../components/buttons/IconButton";
+import GroupButton from "../../components/common/buttons/GroupButon" ;
+import IconButton from "../../components/common/buttons/IconButton";
 import { CiDeliveryTruck, CiLogout } from "react-icons/ci";
 import { useDispatch } from "react-redux";
 import { ThunkDispatch } from "redux-thunk" ;
 import { RootAuthAction } from "../../redux/reducers/authReducer";
-import { updateAvatarUser, updateInformationUser, userLogout } from "../../redux/actions/authActions" ;
+import { postRequestChangePassword, updateAvatarUser, updateInformationUser, userLogout } from "../../redux/actions/authActions" ;
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
@@ -24,14 +23,15 @@ import { RootOrderAction } from "../../redux/reducers/orderReducer";
 import { getOrders } from "../../redux/actions/orderActions" ;
 import Each from "../../middlewares/Each" ;
 import { OrderDto } from "../../types/Order.dto" ;
-import ItemOrder from "../../components/ItemOrder";
-import { OutlineButton } from "../../components/buttons/OutlineButton"; 
+import ItemOrder from "../../components/common/ItemOrder";
+import { OutlineButton } from "../../components/common/buttons/OutlineButton"; 
 import SwipeableViews from 'react-swipeable-views';
 import { MenuOrderList } from "../../constants";
 import useImageModal from "../../hooks/useImageModal";
 import { compareObjects } from "../../utils/compareObjects";
-import toastActions from "../../utils/toastActions"; 
-import Empty from "../../components/Empty";
+import toastActions from "../../utils/toastActions";  
+import FormIconField from "../../components/common/inputs/FormIconField";
+import Empty from "../../components/common/Empty";
 
 interface FormValues extends UserDto {
   // password: string;
@@ -40,8 +40,7 @@ interface FormValues extends UserDto {
 const Account: React.FC = () => {
   const dispatch = useDispatch<ThunkDispatch<RootState, unknown, RootAuthAction | RootOrderAction>>();
   const { user } = useSelector((state: RootState) => state.auth);  
-  const { orders } = useSelector((state: RootState) => state.orders);
-  console.log(orders.filter(order => order.status === "cancel"))   
+  const { orders } = useSelector((state: RootState) => state.orders); 
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [activeStep, setActiveStep] = useState<number>(0);
@@ -118,6 +117,18 @@ const Account: React.FC = () => {
       console.error(error);
     }
   }
+
+  const handleChangePassword = async () => {
+    try {
+      if(user){
+        // const send = await postRequestChangePassword(user?.email);
+      }
+      toast.success("Send change password to your email");
+    } catch (error) {
+      
+    }
+  }
+
   useEffect(()=>{
     if (user)
       dispatch(getOrders(user?._id)); 
@@ -169,7 +180,7 @@ const Account: React.FC = () => {
             <div className="flex-1 grid text-gray-500 gap-2 lg:gap-4 p-4 shadow-lg rounded-lg">
               <p>Security:</p>
               <FormIconField label="Password:" type="password" icon={MdOutlinePassword } register={register("email")} name="password" />
-              <OutlineButton handleSubmit={()=>{}} className="text-white bg-secondary font-medium">Change password</OutlineButton>
+              <OutlineButton handleSubmit={handleChangePassword} className="text-white bg-secondary font-medium">Change password</OutlineButton>
             </div>
             <div className="flex-1 grid gap-2 lg:gap-4 text-gray-500 p-4 shadow-lg rounded-lg">
               <p>Two-factor authentification</p>
@@ -225,17 +236,8 @@ const Account: React.FC = () => {
                   <li>Products</li>
                   <li>Date Time</li>
                   <li>Phone Number</li>  
-                </ul> 
-                {
-                  orders.filter(order => order.status === "pending")
-                    ? <ul className='scroll-mt-6 snap-start grid gap-2'>
-                        <Each
-                            of={orders}
-                            render={(item:OrderDto) => <ItemOrder {...item}/>}
-                          />
-                      </ul>
-                      : <Empty icon={CiDeliveryTruck } title="Empty orders"/>
-                  }
+                </ul>  
+                  <Empty icon={CiDeliveryTruck } title="Empty orders"/> 
               </div>
               <div>
                 <ul className="flex mb-2 w-full px-4 py-2 rounded-md bg-red-400 text-white justify-between">
@@ -245,16 +247,7 @@ const Account: React.FC = () => {
                   <li>Date Time</li>
                   <li>Phone Number</li>  
                 </ul> 
-                {
-                  orders.filter(order => order.status === "cancel").length > 0
-                    ? <ul className='scroll-mt-6 snap-start grid gap-2'>
-                      <Each
-                          of={orders}
-                          render={(item:OrderDto) => <ItemOrder {...item}/>}
-                        />
-                    </ul>
-                  : <Empty icon={CiDeliveryTruck } title="Empty orders"/>
-                } 
+                  <Empty icon={CiDeliveryTruck } title="Empty orders"/> 
               </div>
             </SwipeableViews>
           </div>
@@ -263,6 +256,4 @@ const Account: React.FC = () => {
     </Container>
   )
 }
- 
-
 export default Account

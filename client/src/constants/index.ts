@@ -68,11 +68,7 @@ const NavAdminLists:Array<NavListsProps>  = [
         name:"Trash",
         icon:   HiArchive ,
         link:"deleted",
-    },{
-        name: "Account",
-        icon:HiCog  ,
-        link:"account"
-    } 
+    }, 
 ];
 
 const NavListsIcon: IconType[] = [ 
@@ -93,7 +89,7 @@ const ListsDashboard: DashBoardItemProps[] = [
         icon: IoIosCube   ,
         statistic: IoIosArrowForward  ,
         title: 'Total Products', 
-        description: 'Total products have created in a month',
+        description: 'Total products have created in a weeks',
         type: "product" ,
         total: 'totalProducts', 
         start: previousMonth(),
@@ -101,7 +97,7 @@ const ListsDashboard: DashBoardItemProps[] = [
         icon: IoIosCart    ,
         statistic: IoIosArrowForward  ,
         title: 'Total Orders', 
-        description: 'New orders every week',
+        description: 'New orders every month',
         type: "order" ,
         total: 'totalPeadingProducts', 
         start: new Date().getFullYear().toString(),
@@ -122,9 +118,9 @@ export interface ColourOption {
     readonly isFixed?: boolean;
     readonly isDisabled?: boolean;
 }
- 
+
 export interface BaseProps{
-    name?:string;
+    name:string;
     icon: IconType; 
     animation?: VoidFunction;
 }
@@ -173,7 +169,7 @@ const ListsIconHomePage: Array<BaseProps> = [
 ]
 
 
-const ListIconCategories: Array<BaseProps> = [
+const ListIconCategories: Readonly<Array<BaseProps>> = [
     {
         icon: CiGift ,
         name: "Gift"
@@ -219,7 +215,7 @@ const IconCategoriesFilter: Array<BaseProps> = [
         name: "cap" 
     }
 ] 
-const MenuOrderList: Array<{name: React.ReactNode, color:string ,icon: IconType, }> = [
+const MenuOrderList: Array<{ name: React.ReactNode, color:string , icon: IconType }> = [
     {
         name:'History',
         color: "text-blue-400 border-blue-400 bg-blue-50",

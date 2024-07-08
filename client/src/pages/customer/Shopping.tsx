@@ -1,17 +1,17 @@
-import Categories from '../../components/Categories';
-import DisplayProducts from '../../components/products/DisplayProducts';
+import DisplayProducts from '../../components/features/Display/DisplayProducts';
 import { useDispatch } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { RootState } from '../../redux/store';
 import { RootProductAction } from '../../redux/reducers/productReducer';
 import { getCategories, getProducts, getProductsByImage } from '../../redux/actions/productActions';
 import { useEffect, useState } from 'react';
-import IconButton from '../../components/buttons/IconButton'; 
+import IconButton from '../../components/common/buttons/IconButton'; 
 import { CiImageOn, CiSearch } from 'react-icons/ci'; 
 import useImageModal from '../../hooks/useImageModal';
 import { IoCloseOutline } from 'react-icons/io5'; 
 import useDebounce from '../../hooks/useDebounce';
 import { useParams, useSearchParams } from 'react-router-dom';
+import Categories from '../../components/features/Display/Categories';
 
 const Shopping = () => {   
   const dispatch = useDispatch<ThunkDispatch<RootState, unknown, RootProductAction>>(); 

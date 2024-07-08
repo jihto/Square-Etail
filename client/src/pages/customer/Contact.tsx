@@ -1,9 +1,9 @@
 
-import { useForm } from 'react-hook-form';
-import FormField from '../../components/inputs/FormField';
-import { Button } from '../../components/buttons/Button';
+import { useForm } from 'react-hook-form'; 
+import { Button } from '../../components/common/buttons/Button';
 import { CiGlobe, CiLight, CiMedal } from 'react-icons/ci';
-import Heading from '../../components/Heading';
+import Heading from '../../components/common/Heading';
+import FormField from '../../components/common/inputs/FormField';
 
 interface FormValues{
     name: string;
