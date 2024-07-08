@@ -1,7 +1,6 @@
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'; 
 import { FormEvent } from 'react';  
-import { apiRequest } from '../redux/api';
-import { postOrder } from '../redux/actions/orderActions';
+import { apiRequest } from '../redux/api'; 
  
 function usePaymentForm() {
     const stripe = useStripe();

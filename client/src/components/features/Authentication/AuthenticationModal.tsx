@@ -61,16 +61,7 @@ const AuthenticationModal = () => {
                 </div>  
                 <div className='grid grid-cols-2 justify-center gap-5'>
                     <button className='border rounded-full flex-center gap-4 items-center px-5 py-1 text-gray-700 shadow-md'>
-                        <IoLogoFacebook  className='text-blue-700' size={30}/>
-                        {/* <FacebookLogin
-                            appId={"8288134361213547"}
-                            autoLoad={false}
-                            fields="name,email,picture"
-                            onClick={responseMessage}
-                            callback={errorMessage} 
-                            cssClass='p-0'
-                            textButton={`Login with Facebook `}
-                        /> */}
+                        <IoLogoFacebook  className='text-blue-700' size={30}/> 
                         Sign In with facebook
                     </button>   
                     <button className="border rounded-full flex-center gap-4 items-center px-5 text-gray-700 shadow-md" onClick={login}><FcGoogle/>Sign in with google</button>

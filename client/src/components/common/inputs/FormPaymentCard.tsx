@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { apiRequest } from '../../../redux/api';
 
 
-const stripePromise = loadStripe("pk_test_51OxWZBDIqMrcfmzwP7keW3qBRNjRXyGzAFLGGRJpVK7CPiwMFqmAf0CLE8p1weJUbyeaBLl0QjJ2DO4XbG8RHUMr00ENf4t5zT"); 
+const stripePromise = loadStripe(process.env.PAYMENT_PUBLISHABLE ||""); 
 const FormPaymentCard: React.FC = () => {    
     const [clientSecret, setClientSecret] = useState<string>("");
     const getClientSecret = async () => {
