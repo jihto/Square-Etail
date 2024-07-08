@@ -4,7 +4,7 @@ import { ThunkDispatch } from 'redux-thunk';
 import { useDispatch } from 'react-redux'; 
 import { RootProductAction } from '../../redux/reducers/productReducer';
 import { RootState } from '../../redux/store';
-import DisplayAdminProducts from '../../components/products/DisplayAdminProducts';
+import DisplayAdminProducts from '../../components/features/Display/DisplayAdminProducts';
 import useConfirmModal from '../../hooks/zustands/useConfirmModal';
 
 const AdminTrash = () => {

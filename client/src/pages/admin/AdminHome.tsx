@@ -1,24 +1,24 @@
 import Each from '../../middlewares/Each'
-import DashBoardItem from '../../components/DashBoardItem'
+import DashBoardItem from '../../components/common/DashBoardItem'
 import { ListsDashboard } from '../../constants'  
 import { DashBoardItemProps } from '../../types/DashBoardItem.interface'  
 import { useEffect, useState } from 'react' 
 import moment from 'moment'
-import Confirm from '../../components/Confirm' 
-import Box from '../../components/Box' 
+import Confirm from '../../components/features/Order/Order' 
+import Box from '../../components/common/Box' 
 import { useDispatch } from 'react-redux'
 import { ThunkDispatch } from 'redux-thunk'
 import { RootState } from '../../redux/store'
 import { RootAdminOrdersAction } from '../../redux/reducers/adminOrdersReducer'
 import { getDataAdminOrders } from '../../redux/actions/adminOrdersActions'
 import { useSelector } from 'react-redux'
-import { Button } from '../../components/buttons/Button'
+import { Button } from '../../components/common/buttons/Button'
 import { GoPlus } from 'react-icons/go'
-import IconButton from '../../components/buttons/IconButton'
+import IconButton from '../../components/common/buttons/IconButton'
 import { CiBellOn } from 'react-icons/ci'
 import useChangeProductModal from '../../hooks/zustands/useChangeProductModal'
 import { fetchStatisticAdmin } from '../../redux/api/djangoAPI'
-import Notification from '../../components/Notification'
+import Notification from '../../components/common/Notification'
 import { getAdminNotifications } from '../../redux/actions/notificationAction'
 
 export interface StatisticProps { 
@@ -52,10 +52,10 @@ const AdminHome: React.FC = () => {
       dispatch(getDataAdminOrders());   
       dispatch(getAdminNotifications(admin?.id)) 
     }
-  }, [])  
+  }, [admin]);
   return (
-    <div className='flex flex-col gap-5 bg-gray-100 h-full'>
-      <div className='flex justify-between pt-5 px-8 '>
+    <div className='flex flex-col gap-3 bg-gray-100 h-full'>
+      <div className='flex justify-between pt-5 px-6'>
         <p className='text-3xl font-medium flex-1'>Dashboard</p> 
         <div className='relative w-1/3'>
           { isShowNoti ? <Notification/> : null}  
@@ -66,7 +66,7 @@ const AdminHome: React.FC = () => {
           <Button className='bg-secondary text-white h-fit w-fit items-center justify-items-center' handleSubmit={() => onOpen(null)}><GoPlus /> Add product</Button>
         </div>
       </div>
-      <div className='lg:px-5 flex gap-5'> 
+      <div className='lg:px-4 flex gap-2'> 
         {
           statistic && <Each 
             of={ListsDashboard}
@@ -74,8 +74,8 @@ const AdminHome: React.FC = () => {
           />
         }
       </div>
-      <div className='grid lg:grid-cols-[2fr,1fr] gap-1 lg:px-5 xl:gap-5'>
-        <div className='md:mx-2 mx-0 p-4 bg-white text-black rounded-lg shadow-xl border border-gray-200'> 
+      <div className='grid lg:grid-cols-[2fr,1fr] gap-1 lg:px-2  '>
+        <div className='md:mx-1 mx-0 p-4 bg-white text-black rounded-lg shadow-xl border border-gray-200'> 
           <p className='text-lg font-medium mb-6'>Current order</p>
           <div className='scroll-mt-6 snap-start grid gap-2 items-start overflow-y-scroll overflow-x-hidden h-[300px] lg:h-[600px]'>
             <table className='w-full text-center text-gray-500 ' border={1}>
@@ -91,7 +91,7 @@ const AdminHome: React.FC = () => {
               </thead>
               <tbody>
                 <Each 
-                  of={completedOrders ?? []}
+                  of={completedOrders || []}
                   render={(item: OrderDetailDto) =>  
                     <tr className='border-b-2 border-gray-300 text-center '>
                       <td>{item?.order?.paymentId}</td>
@@ -116,11 +116,11 @@ const AdminHome: React.FC = () => {
             </table>
           </div>
         </div>  
-        <div className='md:mx-2 mx-0 p-4 bg-white text-black rounded-lg  shadow-xl border border-gray-200'> 
+        <div className='md:mx-1 mx-0 p-4 bg-white text-black rounded-lg  shadow-xl border border-gray-200'> 
           <p className='text-lg font-medium mb-6'>Order:</p>
           <div className='scroll-mt-6 snap-start flex flex-col w-full items-start gap-2 overflow-y-scroll overflow-x-hidden h-[380px] lg:h-[600px]'>
             <Each 
-              of={ peadingOrders ?? []}
+              of={ peadingOrders || []}
               render={(item: OrderDetailDto ) =>  <Confirm {...item}/>}
             />
           </div>

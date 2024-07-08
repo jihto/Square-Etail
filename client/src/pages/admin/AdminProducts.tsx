@@ -1,11 +1,11 @@
-import DisplayAdminProducts from '../../components/products/DisplayAdminProducts';
+import DisplayAdminProducts from '../../components/features/Display/DisplayAdminProducts';
 import useChangeProductModal from '../../hooks/zustands/useChangeProductModal';
 import { GoPlus } from 'react-icons/go';
-import { Button } from '../../components/buttons/Button'; 
+import { Button } from '../../components/common/buttons/Button'; 
 import { SubmitHandler, useForm } from 'react-hook-form';
-import IconButton from '../../components/buttons/IconButton';
+import IconButton from '../../components/common/buttons/IconButton';
 import { CiCreditCard2, CiEdit, CiSearch, CiTrash, CiViewList } from 'react-icons/ci';
-import SwitchButton from '../../components/buttons/SwitchButton';
+import SwitchButton from '../../components/common/buttons/SwitchButton';
 import { useCallback, useEffect, useState } from 'react';
 import { ProductDetailsDto } from '../../types/ProductDetails.interface';
 import { getProductsAdmin, postRemoveProduct } from '../../redux/actions/productActions';

@@ -15,6 +15,7 @@ interface OrderDetailDto{
         price: number;
         picture1: string;
         description: string;
+        size: string;
     };
     quantity: number;
     isConfirm: boolean;

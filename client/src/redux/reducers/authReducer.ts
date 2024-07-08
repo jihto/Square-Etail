@@ -43,7 +43,7 @@ const authSlice = createSlice({
       state.error = action.payload; 
       state.isLoading = false;
     }, 
-    logOut(state) {
+    logOut(state) { 
       state.user = null;
       localStorage?.removeItem("user");
       localStorage?.removeItem("cart");

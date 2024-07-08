@@ -7,7 +7,7 @@ import { getItemInTheCart } from './cartActions';
 import { getDataFromLocalStorage } from '../../utils/checkLocalStorage';   
 import { UserDto } from '../../types/User.interface';
 import { getNotifications } from './notificationAction';
-import { ItemInTheCartDto } from '../../types/Cart.dto';
+import { ItemInTheCartDto } from '../../types/Cart.dto'; 
 
 export const userLogin = (
   username: string,
@@ -105,13 +105,13 @@ export const userLogout = (): ThunkAction<void, RootState, unknown, RootAuthActi
       //Update cart item to server before log out
       const cartData = getDataFromLocalStorage("cart", null);
       if(cartData){
-        const products = cartData.products.map((item: ItemInTheCartDto) =>  ({...item, product:item.product.id.toString()}))
+        const products = cartData.products.map((item: ItemInTheCartDto) =>  ({...item, product:{ _id: item.product.id.toString(), size: item.product.size.toString() }}))
         const response = await apiRequest({ 
             url: `cart/update/${cartData._id}`,
             data: { products: products },
             method: "PUT" 
-        });  
-        if (response.statusCode !== 200) throw new Error('response.message');
+        });   
+        if (response.status !== 200) throw new Error(response.message);
         dispatch(logOut());
       }   
     } catch (error: any) {
@@ -168,4 +168,47 @@ export const updateAvatarUser = (formData: FormData): ThunkAction<Promise<boolea
       return false;
     } 
   };
-};    
+};
+
+export const postRequestChangePassword = async(email: string): Promise<string> =>{
+  try {
+    const response = await apiRequest({
+      url: "auth/forget-password",
+      method: "POST",
+      data: {email}
+    });
+    if (response.status > 201 || response.statusCode > 201) throw new Error(response.message);
+    return response.response;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+}
+
+export const postVerifyOTP = async(email: string, otp: string): Promise<string> =>{
+  try {
+    const response = await apiRequest({
+      url: "auth/verify-otp",
+      method: "POST", 
+      data: {email, otp}
+    }); 
+    if (response.status > 201 || response.statusCode > 201) throw new Error(response.message);
+    return response.response;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+}
+
+export const postChangePassword = async(token: string, newPassword: string): Promise<string> =>{
+  try {
+    const response = await apiRequest({
+      url: `auth/change-password/${token}`,
+      method: "POST", 
+      data: { password: newPassword }
+    });
+    if (response.status > 201 || response.statusCode > 201) throw new Error(response.message);
+    console.log(response);
+    return response.response;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+}

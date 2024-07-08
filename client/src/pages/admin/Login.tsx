@@ -1,5 +1,5 @@
-import FormField from '../../components/inputs/FormField'
-import { Button } from '../../components/buttons/Button'
+
+import { Button } from '../../components/common/buttons/Button'
 import { useNavigate } from 'react-router-dom'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { FormValuesLogin } from '../../types/FormValuesLogin.interface' 
@@ -10,6 +10,7 @@ import { RootState } from '../../redux/store'
 import { RootAdminAction } from '../../redux/reducers/adminReducer'
 import { adminLogin } from '../../redux/actions/adminActions'
 import toastActions from '../../utils/toastActions' 
+import FormField from '../../components/common/inputs/FormField'
 
 const Login = () => {
     const navigate = useNavigate();

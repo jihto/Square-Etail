@@ -1,8 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";  
 import { ProductDetailsDto } from "../../types/ProductDetails.interface";
 import { CartDto, ItemInTheCartDto } from "../../types/Cart.dto";
-import { getDataFromLocalStorage } from "../../utils/checkLocalStorage";
-import { compareArray } from "../../utils/compareArray";
+import { getDataFromLocalStorage } from "../../utils/checkLocalStorage"; 
 
 
 interface CartState{
@@ -27,16 +26,22 @@ const cartSlice = createSlice({
     name: "cart",
     initialState,
     reducers: { 
-        changeItem(state: CartState, action: PayloadAction<ItemInTheCartDto>) {   
+        changeItem(state: CartState, action: PayloadAction<ItemInTheCartDto>) { 
             if(state.cart.products){
+                console.log(action.payload);  
                 state.cart.quantity += action.payload.count;
                 state.cart.totalPrice += parseFloat(action.payload.product.price.toString()) * action.payload.count;
-                const index = state.cart.products.findIndex((item) => item.product.id === action.payload.product.id); 
-                if (index !== -1) { 
-                    state.cart.products[index].count += action.payload.count;
-                    const addSize: string[] = compareArray(state.cart.products[index].product.size, action.payload.product.size); 
-                    state.cart.products[index].product.size = addSize;
+                const index = state.cart.products.findIndex(
+                    (item) => item.product.id === action.payload.product.id && item.product.size[0] === action.payload.product.size[0]
+                ); 
+                console.log(index)
+                //Update quantity item 
+                if (index !== -1) {  
+                    state.cart.products[index].count += action.payload.count; 
+                    // const addSize: string[] = compareArray(state.cart.products[index].product.size, action.payload.product.size); 
+                    // state.cart.products[index].product.size = addSize;
                 } else { 
+                    //Add new Item
                     state.cart.products.push({product:action.payload.product, count: action.payload.count});
                 }  
             }else{
@@ -50,8 +55,14 @@ const cartSlice = createSlice({
             state.isLoading = false;
         },  
         removeItem(state: CartState, action: PayloadAction<ProductDetailsDto | null>) {  
-            if(action.payload){
-                const index = state.cart.products.findIndex((item) => item.product.id === action.payload?.id);
+            if(!action.payload){
+                state.cart.products = []
+                state.cart.quantity = 0;
+                state.cart.totalPrice = 0;
+            }
+            else{
+                const index = state.cart.products.findIndex((item) => item.product.id === action.payload?.id && item.product.size[0] === action.payload.size[0]);
+                // console.log(state.cart.products[index].count)
                 if(state.cart.products[index].count > 1){
                     state.cart.products[index].count -= 1;
                 } else{
@@ -59,11 +70,6 @@ const cartSlice = createSlice({
                 }
                 state.cart.quantity -= 1;
                 state.cart.totalPrice -= parseFloat(action.payload.price.toString());
-            }
-            else{
-                state.cart.products = []
-                state.cart.quantity = 0;
-                state.cart.totalPrice = 0;
             } 
             state.isLoading = false;
             localStorage.setItem('cart', JSON.stringify(state.cart));
