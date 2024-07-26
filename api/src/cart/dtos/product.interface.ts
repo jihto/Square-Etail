@@ -31,6 +31,8 @@ export class ProductDto{
     @IsArray()
     categories: Array<string>;
 
+    @IsArray()
+    size: string[]
 
     @IsString()
     created_by: string;

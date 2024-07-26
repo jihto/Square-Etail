@@ -10,12 +10,14 @@ import { JwtModule } from '@nestjs/jwt';
 import { MailerModule } from '@nestjs-modules/mailer';  
 import { Cart } from 'src/schemas/cart.model';
 import { MailModule } from 'src/mail/mail.module';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
   imports:[
     MongooseModule.forFeature([ User, Cart]), 
     JwtModule.register({}), 
-    MailModule
+    MailModule,
+    HttpModule
   ],
   controllers: [AuthController],
   providers: [

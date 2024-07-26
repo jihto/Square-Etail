@@ -10,6 +10,8 @@ import { DataUserResponseDto } from './dtos/dataUserResponse.dto';
 import { SignInDto } from './dtos/signIn.dto'; 
 import { ICart } from 'src/schemas/cart.model';
 import { MailService } from 'src/mail/mail.service';
+import { Observable } from 'rxjs';
+import { HttpService } from '@nestjs/axios';
 
 @Injectable()
 export class AuthService {
@@ -17,7 +19,8 @@ export class AuthService {
         private readonly jwtService: JwtService,   
         @InjectModel('User') private readonly UserModel:Model<IUser>,
         @InjectModel('Cart') private readonly CartModel:Model<ICart>, 
-        private readonly sendEmailService: MailService
+        private readonly sendEmailService: MailService,
+        private readonly httpService: HttpService
     ) {} 
 
     private genrateToken  = async(payload: PayloadDto): Promise<{accessToken: string}> => { 
@@ -39,7 +42,7 @@ export class AuthService {
             return null;
         }
     }
- 
+    
     signUp = async (data: RegisterUserDto):Promise<HttpException> => {
         try {  
             const  emailIsExist = await this.getUser(data.email);
@@ -147,5 +150,64 @@ export class AuthService {
         return {
             accessToken: this.jwtService.sign(payload),
         };
+    }
+
+    async requestForgetPassword (email: string){
+        try {
+            const isExist = await this.UserModel.findOne({ email });
+            if(!isExist) throw new HttpException("Email wasn't exist", HttpStatus.BAD_REQUEST);
+            else{
+                const otp: number = Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000;
+                console.log({ otp }); 
+                isExist.otp = otp; 
+                isExist.save();
+                const otpArray: string[] = otp.toString().split("");
+                await this.sendEmailService.sendForgetPassword(email, otpArray);
+                return new HttpException("Send otp to email success", HttpStatus.OK);
+            }
+        }catch(error){
+            console.log(error.message);
+            throw new HttpException(error.message, HttpStatus.BAD_GATEWAY);
+        }
+    }
+    async verifyForgetPassword (email: string, otp: string){ 
+        try {  
+            const isExist = await this.UserModel.findOne({ email });
+            if(!isExist) throw new HttpException("Email wasn't exist", HttpStatus.BAD_REQUEST);
+            else{ 
+                if(isExist.otp !== Number(otp)) throw new HttpException("Otp not correct", HttpStatus.BAD_REQUEST);
+                else{
+                    const token: string = await this.jwtService.signAsync({email}, { secret: `${process.env.TOKEN_SECRET}`, expiresIn: '1d' });
+                    isExist.otp = 0;
+                    isExist.save();
+                    return new HttpException(token, HttpStatus.OK);
+                }
+            }
+        }catch(error){ 
+            throw new HttpException(error.message, HttpStatus.BAD_GATEWAY);
+        }
+    }
+
+    async changePassword (token: string, password: string){ 
+        try {
+            const dataToken = await this.jwtService.verifyAsync(token, { secret: `${process.env.TOKEN_SECRET}` });
+            if(dataToken){ 
+                if(dataToken.iat > dataToken.exp) throw new HttpException("Token exprires", HttpStatus.BAD_REQUEST);
+                const isExist = await this.UserModel.findOne({ email: dataToken.email }).lean();
+                if(!isExist) throw new HttpException("Email wasn't exist", HttpStatus.BAD_REQUEST);
+                else{ 
+                    console.log(password); 
+                    const hashPassword = await bcrypt.hash(password, 10);   
+                    if(!hashPassword)
+                        throw new HttpException('Password error', HttpStatus.INTERNAL_SERVER_ERROR);
+                    console.log(password);
+                    const update = await this.UserModel.findOneAndUpdate({ email: dataToken.email }, { $set:{ password: hashPassword } });
+                    return new HttpException("Change password successfull", HttpStatus.OK);
+                }
+            }
+        }catch(error){ 
+            console.log(error.message)
+            throw new HttpException(error.messgae, HttpStatus.BAD_GATEWAY);
+        }
     }
 }

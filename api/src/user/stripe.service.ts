@@ -22,9 +22,9 @@ export default class StripeService {
     }
     public async payment (){ 
             const paymentIntent = await this.stripe.paymentIntents.create({
-              currency: "EUR",
-              amount: 1999,
-              automatic_payment_methods: { enabled: true },
+                currency: "EUR",
+                amount: 1999,
+                automatic_payment_methods: { enabled: true },
             });
         
             // Send publishable key and PaymentIntent details to client

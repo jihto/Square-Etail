@@ -42,4 +42,30 @@ export class AuthController {
         console.log({user: req.user})
         return this.authService.refreshToken(req.user);
     }  
+
+    @SkipAuth()
+    @Post('forget-password')
+    forgetPassword(
+        @Body('email') email: string
+    ) : Promise<HttpException> { 
+        console.log(email);
+        return this.authService.requestForgetPassword(email);
+    }  
+
+    @SkipAuth()
+    @Post('verify-otp')
+    verifyOTP(
+        @Body() { email, otp }: {email: string, otp: string}
+    ): Promise<HttpException> { 
+        return this.authService.verifyForgetPassword(email, otp);
+    }  
+
+    @SkipAuth()
+    @Post('change-password/:token')
+    changeNewPassword(
+        @Body('password') password: string,
+        @Param('token') token: string
+    ): Promise<HttpException> { 
+        return this.authService.changePassword(token, password);
+    }  
 }

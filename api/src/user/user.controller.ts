@@ -75,7 +75,7 @@ export class UserController {
         return await this.userService.updateAvatar(request.user._id, url);
     }
 
-    @Post('change-password')
+    @Post('verify-password')
     async verifyPassword(
         @Request() request: any,
         @Body() password: string

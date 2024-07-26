@@ -1,3 +1,4 @@
+import { maxLength } from 'class-validator';
 import mongoose, { Document, Schema, Types } from 'mongoose'; 
 
 import { Sex } from 'src/common/types/sex.enum'; 
@@ -12,6 +13,7 @@ const UserSchema = new Schema({
     avatar: { type: String, require: false}, 
     gender: { type: String, enum: [Sex.MALE, Sex.FEMALE], default: Sex.MALE }, 
     cartId: { type: Types.ObjectId, ref: 'Cart' },
+    otp: { type: Number, maxLength: 6, default: 0},
     password: { type: String, required: true }, 
     isVerify: { type: Boolean, default:false},
 });
@@ -27,6 +29,7 @@ export interface IUser extends Document {
     avatar: string;
     gender: Sex;  
     password: string;  
+    otp: number;
     isVerify: boolean;
     cartId: mongoose.Schema.Types.ObjectId; 
 }

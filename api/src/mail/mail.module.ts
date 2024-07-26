@@ -6,15 +6,15 @@ import { MailerModule } from '@nestjs-modules/mailer';
   imports:[ 
     MailerModule.forRoot({
       transport: {
-        host: "smtp.gmail.com",  
+        host:  process.env.MAILDEV_HOST,  
         secure: false,
         auth: {
-          user: "pnjihto123@gmail.com",
-          pass: "ykjoyqljaxpsriib",
+          user: process.env.MAILDEV_USER,
+          pass:  process.env.MAILDEV_PASS,
         },
       },
       defaults: {
-        from: "Square-Etail pnjihto123@gmail.com",
+        from: process.env.MAILDEV_FROM,
       }, 
       template: { 
         options: {

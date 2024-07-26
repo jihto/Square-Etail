@@ -65,8 +65,7 @@ export class UserService {
     }
 
     updateInformation = async(id : string , updateUserDto: Record<string, any>): Promise<DataUserResponseDto> => { 
-        try {
-            console.log({ updateUserDto });
+        try { 
             const user = await this.UserModel.findById(id); 
             const updatedFields = { ...updateUserDto };
             Object.keys(updatedFields).forEach(key => {
@@ -75,8 +74,7 @@ export class UserService {
                 }
             }); 
             Object.assign(user, updatedFields);
-            const update = await user.save();
-            console.log({ updatedFields });
+            const update = await user.save(); 
             if(!update) 
                 throw new  HttpException("Not Found",HttpStatus.NOT_FOUND);  
             const result = await this.UserModel.findOne({ _id: id }).lean();

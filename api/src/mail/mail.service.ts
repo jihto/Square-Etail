@@ -61,4 +61,34 @@ export class MailService {
             </div>`, 
             }) 
     }
+
+    sendForgetPassword = async (email: string, otp: string[]) => {
+        await this.mailerService
+            .sendMail({
+                to: email, 
+                subject: 'Email Change Password ✔', 
+                html:  `
+                <p>Otp verify to change password</p>
+                <div style="display: flex; justify-content: center;">
+                    <input type="text" maxlength="1" style="width: 48px;height: 48px; margin: 0 8px; border: 1px solid #ccc; border-radius: 4px; text-align: center; font-size: 24px;"
+                        value=${otp[0]}
+                    /> 
+                    <input type="text" maxlength="1" style="width: 48px;height: 48px; margin: 0 8px; border: 1px solid #ccc; border-radius: 4px; text-align: center; font-size: 24px;"
+                        value=${otp[1]}
+                    /> 
+                    <input type="text" maxlength="1" style="width: 48px;height: 48px; margin: 0 8px; border: 1px solid #ccc; border-radius: 4px; text-align: center; font-size: 24px;"
+                        value=${otp[2]}
+                    /> 
+                    <input type="text" maxlength="1" style="width: 48px;height: 48px; margin: 0 8px; border: 1px solid #ccc; border-radius: 4px; text-align: center; font-size: 24px;"
+                        value=${otp[3]}
+                    /> 
+                    <input type="text" maxlength="1" style="width: 48px;height: 48px; margin: 0 8px; border: 1px solid #ccc; border-radius: 4px; text-align: center; font-size: 24px;"
+                        value=${otp[4]}
+                    /> 
+                    <input type="text" maxlength="1" style="width: 48px;height: 48px; margin: 0 8px; border: 1px solid #ccc; border-radius: 4px; text-align: center; font-size: 24px;"
+                        value=${otp[5]}
+                    />  
+                </div>`, 
+        }) 
+    }
 }
