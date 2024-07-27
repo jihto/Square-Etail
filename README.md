@@ -52,9 +52,9 @@ First, run the development client:
 
 Second, run the development server user:
 
-
+```bash  
 # Navigation to api folder 
-1. ```bash cd api  ```
+1. cd api  
 # Install package-lock.json and library 
 2. npm i
 # Connect to database MongoDB. Navigate to app.module.ts
@@ -65,7 +65,7 @@ Second, run the development server user:
    yarn dev
    # or if already install nest: npm install -g @nestjs/cli
    nest start --watch
-
+```
 
 The final, run the development server seller:
 
