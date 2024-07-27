@@ -32,41 +32,59 @@ This is a shop for fashion using search image project build base on
 
 ## 🚀 To Getting Started
 
-Make sure you have [npx](https://www.npmjs.com/package/npx) installed (`npx` is shipped by default since npm `5.2.0`)
-Just run the following command at the root of your project and answer questions:
+Make sure you have [npx](https://www.npmjs.com/package/npx) installed (`npx` is shipped by default since npm `10.2.2`)
+Just run the following command at the root of your project:
 
 First, run the development client:
 
 ```bash 
 #Navigation to Client folder 
 1. cd client 
-#Install package-lock.json and library
-2. npm i
-#Run client host
+# Install package-lock.json and library
+2. npm i 
+# Run client host
 3. npm run dev
-    # or
-    yarn dev
-    # or
-    pnpm dev
+   # or
+   yarn dev
+   # or
+   pnpm dev
 ``` 
 
-Second, run the development server:
+Second, run the development server user:
 
 ```bash
-#Navigation to Server folder 
-1. cd server 
-#Install package-lock.json and library
+# Navigation to api folder 
+1. cd api  
+# Install package-lock.json and library 
 2. npm i
-#Run server host
-3. npm run dev --watch
-    # or
-    yarn dev
-    # or
-    nest start --watch
+# Connect to database MongoDB. Navigate to app.module.ts
+3.Add url database in this line MongooseModule.forRoot('YOUR_URL_DATABASE')
+# Run server host
+4. npm run dev --watch
+   # or
+   yarn dev
+   # or if already install nest: npm install -g @nestjs/cli
+   nest start --watch
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result client.
-Open [http://localhost:3333](http://localhost:3333) with your browser to see the result server.
+The final, run the development server seller:
+
+```bash
+# Navigation to Server folder 
+1. cd api  
+# Install package-lock.json and library 
+2. npm i
+# Run server host
+3. npm run dev --watch
+   # or
+   yarn dev
+   # or if already install nest: npm install -g @nestjs/cli
+   nest start --watch
+```
+
+Open [http://localhost:3000](http://localhost:5107) with your browser to see the result client.
+Open [http://localhost:3333](http://localhost:3333) with your browser to see the result server user.
+Open [http://localhost:3333](http://localhost:8000) with your browser to see the result server seller.
 
 ## ⭐️ Run test
 
