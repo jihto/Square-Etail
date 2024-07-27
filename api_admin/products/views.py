@@ -26,7 +26,7 @@ IMAGE_DIR = Path("./products/static/img")
 IMAGE_DIR.mkdir(parents=True, exist_ok=True) 
 UPLOADED_DIR.mkdir(parents=True, exist_ok=True) 
 feature_dir = Path(__file__).resolve().parent / "static" / "feature"
-fe = FeatureExtractor(reduced_dim=128) 
+fe = FeatureExtractor() 
 features = []
 img_paths = []
 
@@ -64,10 +64,31 @@ def send_user_ids_to_nest(ids, token):
         print("Error:", e)
 
 @csrf_exempt
+def index(request):
+    if request.method == 'POST' and request.FILES['query_img']:
+        query_img = request.FILES.get('query_img') 
+        # Save query image 
+        img = Image.open(query_img)
+        uploaded_img_path = UPLOADED_DIR / (datetime.now().isoformat().replace(":", ".") + "_" + query_img.name)
+        img.save(uploaded_img_path)
+        
+        # Open the image and process
+        query = fe.extract(img)
+        print(f"Feature vector shape: {query.shape}") 
+        print(features)
+        dists = np.linalg.norm(features - query, axis=1)  # L2 distances to features
+        ids = np.argsort(dists)[:30]  # Top 8 results
+        scores = [(dists[id], img_paths[id]) for id in ids]
+        
+        return render(request, 'products/index.html', {'query_path': uploaded_img_path, 'scores': scores})
+    else:
+        return render(request, 'products/index.html')
+
+
+@csrf_exempt
 def all_products(request, *args, **kwargs):  
     if request.method == 'POST':
-        query_img = request.FILES.get('query_img')
-        print("Image Upload: ", query_img)
+        query_img = request.FILES.get('query_img') 
         if not query_img or query_img.content_type not in ['image/jpeg', 'image/png']:
             return JsonResponse({'error': "This is not a image"}, status=500)
         if query_img.size == 0:
@@ -79,8 +100,10 @@ def all_products(request, *args, **kwargs):
             query = fe.extract(img)   
             print(f"Feature vector shape: {query.shape}") 
             dists = np.linalg.norm(features - query, axis=1)  
-            ids = np.argsort(dists)[:8]  
+            ids = np.argsort(dists)[:6] 
+            # ids = np.where(dists < 1.2)[0] 
             pictures = [str(img_paths[id]) for id in ids]  
+            print(pictures)
             query = Q()
             for url in pictures: 
                 query |= Q(picture1__icontains=url) 
@@ -91,21 +114,41 @@ def all_products(request, *args, **kwargs):
             print(f"Error processing image: {e}") 
             return JsonResponse({'error': str(e)}, status=500)
     else: 
-        try: 
-            results = []
+        try:  
             search = request.GET.get('search')
             creator_username = request.GET.get('createBy')
-            print("search: ", search)
-            print("category : ", creator_username) 
-            if creator_username:
-                creator = User.objects.get(username=creator_username)
-                results = Product.objects.filter(created_by=creator)
-            elif search:
-                results = Product.objects.filter(Q(name__icontains=search)).select_related('created_by')
-            else:
-                results = Product.objects.all().select_related('created_by') 
+            categories = request.GET.get("categories")
+            category_ids = json.loads(categories) if categories else []
+            size = request.GET.get("size")
+            size = json.loads(size) if size else []
+            price = request.GET.get("price")
+            price = json.loads(price) if price else [] 
+            products = Product.objects.filter(isDeleted=False)
+            print(price)
+            print(category_ids)
+            # Filter by search term
+            if search:
+                products = products.filter(
+                    Q(name__icontains=search) | Q(description__icontains=search)
+                ) 
 
-            products_list = [ serialize_product(product) for product in results]  
+            # Filter by creator_username
+            if creator_username:
+                products = products.filter(created_by__username=creator_username)
+
+            # Filter by price 
+            if price:
+                min_price = price[0]
+                max_price = price[1] 
+                products = products.filter(price__gte=min_price, price__lte=max_price)
+            # Filter by categories
+            if categories:
+                products = products.filter(categories__id__in=category_ids)
+
+            # Filter by size
+            if size:
+                products = products.filter(size__contains=size) 
+            products_list = [ serialize_product(product) for product in products]   
             return JsonResponse(products_list, safe=False)
         except Exception as e: 
             print(f"Error processing image: {e}") 
@@ -237,52 +280,55 @@ class UpdateProduct(APIView):
 
     def put(self, request, product_id):
         try:
-            product = Product.objects.get(id=product_id, created_by=request.user)
+            product = Product.objects.get(id=product_id, created_by=request.user) 
+            name = request.data.get("name")
+            picture1 = request.FILES.get('picture1')
+            picture2 = request.FILES.get('picture2')
+            picture3 = request.FILES.get('picture3')
+            description = request.data.get("description")
+            price = request.data.get("price")
+            stock = request.data.get("stock")
+            size = json.loads(request.data.get("size", '[]'))
+            category_ids = json.loads(request.data.get("categories", '[]')) 
+            print("ID: ", category_ids)
+            if picture1:
+                picture, feature = saveImageUploadFeature(picture1)
+                product.picture1 = picture
+                print("feature = ", feature)
+            if picture2:
+                picture2 = saveImageUpload(picture2)
+                product.picture2 = picture2 
+            if picture3:
+                picture3 = saveImageUpload(picture3)
+                product.picture3 = picture3 
+            if name:
+                product.name = name 
+            if description:
+                product.description = description 
+            if price:
+                product.price = float(price) 
+            if stock:
+                product.stock = int(stock) 
+            if size:
+                product.size = size 
+            if category_ids:
+                product.categories.add(*category_ids)  
+            product.save() 
+            product_data = serialize_product(product) 
+            return JsonResponse({"success": "Product updated successfully.", "data": product_data}, status=200)
         except Product.DoesNotExist:
-            return JsonResponse({'error': 'Product not found or you are not authorized to update this product.'}, status=404) 
-        name = request.data.get("name")
-        picture1 = request.FILES.get('picture1')
-        picture2 = request.FILES.get('picture2')
-        picture3 = request.FILES.get('picture3')
-        description = request.data.get("description")
-        price = request.data.get("price")
-        stock = request.data.get("stock")
-        size = json.loads(request.data.get("size", '[]'))
-        category_ids = request.data.get("categories", '[]') 
-        print("ID: ", category_ids)
-        if picture1:
-            picture, feature = saveImageUploadFeature(picture1)
-            product.picture1 = picture
-            print("feature = ", feature)
-        if picture2:
-            picture2 = saveImageUpload(picture2)
-            product.picture2 = picture2 
-        if picture3:
-            picture3 = saveImageUpload(picture3)
-            product.picture3 = picture3 
-        if name:
-            product.name = name 
-        if description:
-            product.description = description 
-        if price:
-            product.price = float(price) 
-        if stock:
-            product.stock = int(stock) 
-        if size:
-            product.size = size 
-        if category_ids:
-            product.categories.set(category_ids)
-        # product.save() 
-        serialized_product = serialize('json', [product])
-        product_data = json.loads(serialized_product)[0]['fields']
-        product_data['id'] = product.id
-        return JsonResponse({"success": "Product updated successfully.", "data": product_data}, status=200)
+                return JsonResponse({'error': 'Product not found or you are not authorized to update this product.'}, status=404) 
 
 class GetProduct(APIView):
     permission_classes = [permissions.IsAuthenticated]	
     def get(self, request):   
         try: 
+            search = request.GET.get('search')
             products = Product.objects.filter(created_by=request.user, isDeleted = False).order_by('-createdAt') 
+            if search:
+                products = products.filter(
+                    Q(name__icontains=search) | Q(description__icontains=search)
+                ) 
             products_list = [ serialize_product(product) for product in products]  
             return JsonResponse({"success": True, "message": "Get product success", "products" : products_list}, status=200)
         except Product.DoesNotExist:
@@ -303,7 +349,6 @@ class GetProductInTheTrash(APIView):
             return JsonResponse({'error':True, "message": 'Product does not exist'}, status=404)
         except Exception as e:
             return JsonResponse({'error':True, "message":  str(e)}, status=500)
-
 
 class ViewsProduct(APIView):
     def put(self, request, param=None, productId = None):

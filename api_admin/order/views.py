@@ -56,7 +56,7 @@ class GetSellerOrder(APIView):
         user_create =  request.user.username
 
 
-def create_order_details(order_id, product_id, quantity):
+def create_order_details(order_id, product_id, quantity, size):
     try: 
         order = Order.objects.get(pk=order_id)
         product = Product.objects.select_related('created_by').get(pk=product_id)  
@@ -64,6 +64,7 @@ def create_order_details(order_id, product_id, quantity):
         order_detail = OrderDetails.objects.create(
             order=order,
             product=product,
+            size = size,
             quantity=quantity,
             seller_name= seller_name,
             isConfirm=False
@@ -89,7 +90,7 @@ def create_order(request, *args, **kwargs):
         total_price = float(request.POST.get('totalPrice'))
         user_id = request.POST.get('userId')
         #loop and get product id and number product
-        products =[({ 'product': product_data['product']['id'], "count": product_data['count']}) for product_data in list_products] 
+        products =[({ 'product': product_data['product']['id'], "size": product_data['product']['size'], "count": product_data['count']}) for product_data in list_products] 
         
         # create new order to database
         random_code = ''.join(random.choices('0123456789', k=6))
@@ -105,7 +106,7 @@ def create_order(request, *args, **kwargs):
         ) 
         order.save() 
         for product in products:
-            create_order_details(order.id, product['product'], product['count'])
+            create_order_details(order.id, product['product'], product['count'], product['size'])
         noti = create_notification_to_nest(user_id, "success")  
         return JsonResponse({'message': 'Order created successfully', "code": random_code}, status=201)
     except Exception as e: 

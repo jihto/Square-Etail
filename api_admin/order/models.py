@@ -28,11 +28,14 @@ class Order(models.Model):
             product_id = item['product'] 
             count = item['count']
             product = Product.objects.get(pk=product_id)
+            order_detail = self.order_details.filter(product=product).first()
+
             product_data = {
                 'id': product.id,
                 'name': product.name,
                 'price': product.price,
                 'picture': str(product.picture1) if product.picture1 else None, 
+                'size' : order_detail.size if order_detail else None, 
             } 
             order_detail =  {
                 "count": count,
@@ -56,6 +59,7 @@ class OrderDetails(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     seller_name = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
     quantity = models.PositiveIntegerField()
+    size = models.CharField(max_length=50, default=False)
     status = models.CharField(max_length=50, choices=STATUS_CHOICES, default='pending') 
     isConfirm = models.BooleanField(default=False)
     createdAt = models.DateTimeField(auto_now_add=True)

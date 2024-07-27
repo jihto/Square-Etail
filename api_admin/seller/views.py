@@ -10,8 +10,9 @@ from django.contrib.postgres.aggregates import ArrayAgg
 from order.models import OrderDetails
 from django.db.models.functions import TruncMonth, TruncWeek, Coalesce
 from django.utils import timezone 
-from collections import defaultdict  
+from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
+
 def get_seller_product_stats(seller):
     # Total product had sold 
     # total_products_sold = OrderDetails.objects.filter(seller_name=seller.id).aggregate(total_products=Sum('quantity'))['total_products'] or 0
@@ -29,6 +30,15 @@ def get_seller_product_stats(seller):
         ).aggregate(total_completed_products=Sum('quantity'))['total_completed_products'] or 0
     return total_products, total_views, total_completed_products, total_peading_products
 
+@csrf_exempt 
+def getCategories(request, *args, **kwargs): 
+    if request.method == 'GET':
+        try:
+            categories = Category.objects.all() 
+            result =  list(categories.values())
+            return JsonResponse({"success": "Get categories success", "data": result}, status=200)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
 
 
 class RetrieveUserView(APIView):
@@ -64,16 +74,6 @@ class Statistic(APIView):
             return JsonResponse({'error': str(e)}, status=500)
         
 
-class Categories(APIView):
-    permission_classes = [permissions.IsAuthenticated]
-    def get(self, request):
-        try:
-            categories = Category.objects.all() 
-            result =  list(categories.values())
-            return JsonResponse({"success": "Get categories success", "data": result}, status=200)
-        except Exception as e:
-            return JsonResponse({'error': str(e)}, status=500)
-
 class StatisticProductCreated(APIView):
     permission_classes = [permissions.IsAuthenticated] 
     def get(self, request):
@@ -95,7 +95,7 @@ class StatisticProductCreated(APIView):
                 week_index = (week - 1) // 4  # Convert week number to 4 quarter intervals
                 print("Week _ index: ", week_index)
                 result[week_index - 2] += count
-                print(result)
+                print("Order : ", result)
             return JsonResponse({"success": "get statistic success", "data": result}, status=200)
         except Exception as e:
             return JsonResponse({'error': True, "message": str(e)}, status=500)
@@ -122,11 +122,10 @@ class StatisticOrderConfirm(APIView):
                 month = order_dict['month'].month -1 # Months are zero-indexed
                 count = order_dict['count']
                 result[month] = count
-            print(result) 
+            print("Order Confirm : ", result) 
             return JsonResponse({"success": "get statistic success", "data": result}, status=200)
         except Exception as e:
-            return JsonResponse({'error':True, "message":  str(e)}, status=500)
-        
+            return JsonResponse({'error':True, "message":  str(e)}, status=500)   
 
 class StatisticViews(APIView):
     permission_classes = [permissions.IsAuthenticated]	
@@ -134,17 +133,16 @@ class StatisticViews(APIView):
         try: 
             current_year = datetime.now().year 
             monthly_views = Product.objects.filter(created_by=request.user, createdAt__year=current_year).annotate(month=TruncMonth('createdAt')).values('month').annotate(views_count=Count('views')).order_by('month').values('month', 'views_count')
-            print(monthly_views)
+            
             # Create a list to store the monthly views
             monthly_views_list = [0] * 12
 
             # Populate the list with the views count for each month
-            for view in monthly_views:
-                print(view)
+            for view in monthly_views: 
                 month = view['month'].month - 1
                 count = view['views_count']
                 monthly_views_list[month] = count
-
+            print("Views: ", monthly_views_list)
             return JsonResponse({"success": "get statistic success", "data": monthly_views_list}, status=200)
         except Exception as e:
             return JsonResponse({'error':True, "message":  str(e)}, status=500)
