@@ -39,17 +39,22 @@ First, run the development client:
 
 
 1. Navigation to Client folder 
-```bash  cd client ``` 
-# Install package-lock.json and library
-2. npm i 
-# Run client host
-3. npm run dev
-   # or
-   yarn dev
-   # or
-   pnpm dev
-
-
+```bash
+  cd client
+``` 
+2. Install package-lock.json and library
+```bash
+  npm i
+``` 
+3. Run client host
+```bash
+  npm run dev
+  # or
+  yarn dev
+  # or
+  pnpm dev
+```  
+ 
 Second, run the development server user:
 
 ```bash  
