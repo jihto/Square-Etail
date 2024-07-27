@@ -6,10 +6,15 @@ import numpy as np
 from PIL import Image
 
 class FeatureExtractor:
-    def __init__(self):
+    def __init__(self, reduce_dim = 128):
         base_model = VGG16(weights="imagenet")
         self.model = Model(inputs=base_model.input, outputs = base_model.get_layer("fc1").output) 
-
+        
+        ## Options change output vector output from 4096 to 128. To reduce time to optimized data query time and search 
+        # base_model = VGG16(weights="imagenet")
+        # fc1_output = base_model.get_layer("fc1").output
+        # reduced_dim_layer = Dense(reduced_dim, activation='relu')(fc1_output)
+        # self.model = Model(inputs=base_model.input, outputs=reduced_dim_layer)
     def  extract(self, img):
         img = img.resize((224,224)).convert('RGB')
         x = image.img_to_array(img)
