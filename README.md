@@ -54,13 +54,12 @@ First, run the development client:
   # or
   pnpm dev
 ```  
- 
-Second, run the development server user:
-1. Navigation to api folder 
+Second run the development server user:
+1. Navigation to api folder
 ```bash 
    cd api
 ```
-2 Install package-lock.json and library 
+2. Install package-lock.json and library
 ```bash 
   npm i
 ```
@@ -77,19 +76,19 @@ Second, run the development server user:
   nest start --watch
 ```
 The final, run the development server seller:
-
+1. Navigation to Server folder 
 ```bash
-# Navigation to Server folder 
-1. cd api  
-# Install package-lock.json and library 
-2. npm i
+  cd api_admin
+```  
+2. Install package-lock.json and library 
+ npm i
 # Run server host
 3. npm run dev --watch
    # or
    yarn dev
    # or if already install nest: npm install -g @nestjs/cli
    nest start --watch
-```
+
 
 Open [http://localhost:3000](http://localhost:5107) with your browser to see the result client.
 Open [http://localhost:3333](http://localhost:3333) with your browser to see the result server user.
