@@ -56,22 +56,26 @@ First, run the development client:
 ```  
  
 Second, run the development server user:
-
-```bash  
-# Navigation to api folder 
-1. cd api  
-# Install package-lock.json and library 
-2. npm i
-# Connect to database MongoDB. Navigate to app.module.ts
-3.Add url database in this line MongooseModule.forRoot('YOUR_URL_DATABASE')
-# Run server host
-4. npm run dev --watch
-   # or
-   yarn dev
-   # or if already install nest: npm install -g @nestjs/cli
-   nest start --watch
+1. Navigation to api folder 
+```bash 
+   cd api
 ```
-
+2 Install package-lock.json and library 
+```bash 
+  npm i
+```
+3. Connect to database MongoDB. Navigate to app.module.ts
+```bash 
+  Add url database in this line MongooseModule.forRoot('YOUR_URL_DATABASE')
+```
+4. Run server host
+```bash 
+  npm run dev --watch
+  # or
+  yarn dev
+  # or if already install nest: npm install -g @nestjs/cli
+  nest start --watch
+```
 The final, run the development server seller:
 
 ```bash
