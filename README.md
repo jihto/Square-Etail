@@ -32,11 +32,10 @@ This is a shop for fashion using search image project build base on
 
 ## 🚀 To Getting Started
 
-Make sure you have [npx](https://www.npmjs.com/package/npx) installed (`npx` is shipped by default since npm `10.2.2`)
+Make sure you have [npx](https://www.npmjs.com/package/npx) installed (`npx` is shipped by default since npm `10.2.2`) and Python.
 Just run the following command at the root of your project:
 
 First, run the development client:
-
 
 1. Navigation to Client folder 
 ```bash
@@ -53,8 +52,10 @@ First, run the development client:
   yarn dev
   # or
   pnpm dev
-```  
+```
+
 Second run the development server user:
+
 1. Navigation to api folder
 ```bash 
    cd api
@@ -75,24 +76,18 @@ Second run the development server user:
   # or if already install nest: npm install -g @nestjs/cli
   nest start --watch
 ```
+
 The final, run the development server seller:
+
 1. Navigation to Server folder 
 ```bash
   cd api_admin
 ```  
-2. Install package-lock.json and library 
- npm i
-# Run server host
-3. npm run dev --watch
-   # or
-   yarn dev
-   # or if already install nest: npm install -g @nestjs/cli
-   nest start --watch
 
 
-Open [http://localhost:3000](http://localhost:5107) with your browser to see the result client.
-Open [http://localhost:3333](http://localhost:3333) with your browser to see the result server user.
-Open [http://localhost:3333](http://localhost:8000) with your browser to see the result server seller.
+Open [http://localhost:5107](http://localhost:5107) with your browser to see the result client.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result server user.
+Open [http://localhost:8000](http://localhost:8000) with your browser to see the result server seller.
 
 ## ⭐️ Run test
 
