@@ -8,7 +8,7 @@
     <img src="https://codecov.io/gh/kefranabg/readme-md-generator/branch/master/graph/badge.svg" />
   </a> 
 </p>
-This is a shop for fashion using search image project build base on 
+<p>This is a shop for fashion using search image project build base on </p>
 <p>- Backend: Microservices architecture: Django, NestJS</p>
 <p>- Frontend: ReactJS</p>
 <p>- Database: SQLite and MongoDB</p>
