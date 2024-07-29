@@ -17,18 +17,18 @@ This is a shop for fashion using search image project build base on
 
 ## 🍀 User interface 
 - Role user
-<img src="https://github.com/user-attachments/assets/1175a832-edc3-4977-a577-28934664ef78" width="500" height="300">
-<img src="https://github.com/user-attachments/assets/fd6fb745-1880-4564-ae76-93aed39a2b7d" width="500" height="300">
+<img src="https://github.com/user-attachments/assets/1175a832-edc3-4977-a577-28934664ef78" width="450" height="280">
+<img src="https://github.com/user-attachments/assets/fd6fb745-1880-4564-ae76-93aed39a2b7d" width="450" height="280">
 
-<img src="https://github.com/user-attachments/assets/ce980172-e236-4be7-8f91-f7c88d62809f" width="500" height="300">
-<img src="https://github.com/user-attachments/assets/78450453-1871-432a-a3ed-2cec6b280c3f" width="500" height="300"> 
+<img src="https://github.com/user-attachments/assets/ce980172-e236-4be7-8f91-f7c88d62809f" width="450" height="280">
+<img src="https://github.com/user-attachments/assets/78450453-1871-432a-a3ed-2cec6b280c3f" width="450" height="280"> 
 
-<img src="https://github.com/user-attachments/assets/32f0bace-9f67-4ee5-96c3-7a918b7b90aa" width="500" height="300"> 
-<img src="https://github.com/user-attachments/assets/a6dce0ac-57fd-4cd1-a026-76b6f2bdfe3c" width="500" height="300">
+<img src="https://github.com/user-attachments/assets/32f0bace-9f67-4ee5-96c3-7a918b7b90aa" width="450" height="280"> 
+<img src="https://github.com/user-attachments/assets/a6dce0ac-57fd-4cd1-a026-76b6f2bdfe3c" width="450" height="280">
 
 - Role seller
-<img src="https://github.com/user-attachments/assets/70ef06de-afc8-400f-9eea-57690c359a45" width="500" height="300"> 
-<img src="https://github.com/user-attachments/assets/37716303-bdfd-4075-a74d-85ff95cf39b1" width="500" height="300">
+<img src="https://github.com/user-attachments/assets/70ef06de-afc8-400f-9eea-57690c359a45" width="450" height="280"> 
+<img src="https://github.com/user-attachments/assets/37716303-bdfd-4075-a74d-85ff95cf39b1" width="450" height="280">
 
 ## 🚀 To Getting Started
 
