@@ -82,11 +82,24 @@ The final, run the development server seller:
 1. Navigation to Server folder 
 ```bash
   cd api_admin
+```
+2. Create a Virtual Environment 
+```bash
+  python -m venv .venv
+```  
+3. Activate the Virtual Environment 
+```bash
+  .venv\Scripts\activate
+```
+4. Run the server admin host  ( Navigate to the root api_admin )
+```bash
+  python manage.py runserver 
 ```  
 
-
 Open [http://localhost:5107](http://localhost:5107) with your browser to see the result client.
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result server user.
+
 Open [http://localhost:8000](http://localhost:8000) with your browser to see the result server seller.
 
 ## ⭐️ Run test
