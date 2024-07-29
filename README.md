@@ -9,10 +9,10 @@
   </a> 
 </p>
 This is a shop for fashion using search image project build base on 
-  + Backend: Microservices architecture: Django, NestJS
-  + Frontend: ReactJS
-  + Database: SQLite and MongoDB
-  + Image Recognition: VGG16 model
+- Backend: Microservices architecture: Django, NestJS
+- Frontend: ReactJS
+- Database: SQLite and MongoDB
+- Image Recognition: VGG16 model
  
 
 ## 🍀 User interface 
