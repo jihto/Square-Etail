@@ -17,7 +17,7 @@ This is a shop for fashion using search image project build base on
 
 ## 🍀 User interface 
 - Role user
-<img src="https://github.com/user-attachments/assets/1175a832-edc3-4977-a577-28934664ef78" width="450" height="280">
+<img src="https://github.com/user-attachments/assets/1175a832-edc3-4977-a577-28934664ef78" width="50%" height="280">
 <img src="https://github.com/user-attachments/assets/fd6fb745-1880-4564-ae76-93aed39a2b7d" width="450" height="280">
 
 <img src="https://github.com/user-attachments/assets/ce980172-e236-4be7-8f91-f7c88d62809f" width="450" height="280">
